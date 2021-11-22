@@ -3,10 +3,10 @@ package $javaPackage;
 /**
  * Provides utility methods used in BaseFragment.
  */
-@javax.annotation.Generated("org.cryptomator.generator.FragmentProcessor")
+@javax.annotation.Generated("de.ninafoss.generator.FragmentProcessor")
 class $className {
 
-    public static void inject(org.cryptomator.presentation.di.component.ActivityComponent component, org.cryptomator.presentation.ui.fragment.BaseFragment fragment) {
+    public static void inject(de.ninafoss.presentation.di.component.ActivityComponent component, de.ninafoss.presentation.ui.fragment.BaseFragment fragment) {
 #foreach( $fragment in $fragments )
         if (fragment instanceof $fragment.qualifiedName) {
             component.inject(($fragment.qualifiedName)fragment);
@@ -17,7 +17,7 @@ class $className {
         }
     }
 
-    public static org.cryptomator.presentation.presenter.Presenter initializePresenter(org.cryptomator.presentation.ui.fragment.BaseFragment fragment) {
+    public static de.ninafoss.presentation.presenter.Presenter initializePresenter(de.ninafoss.presentation.ui.fragment.BaseFragment fragment) {
 #foreach( $fragment in $fragments )
     if (fragment instanceof $fragment.qualifiedName) {
         #if ($fragment.hasPresenter)

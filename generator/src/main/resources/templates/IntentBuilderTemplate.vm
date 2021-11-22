@@ -3,8 +3,8 @@ package $javaPackage;
 /**
  * Builds {@link android.content.Intent Intents} to invoke {@link ${targetActivity}}.
  */
-@javax.annotation.Generated("org.cryptomator.generator.IntentProcessor")
-public class $className implements org.cryptomator.presentation.intent.IntentBuilder {
+@javax.annotation.Generated("de.ninafoss.generator.IntentProcessor")
+public class $className implements de.ninafoss.presentation.intent.IntentBuilder {
 
     private boolean preventGoingBackInHistory;
 #foreach( $parameter in $parameters )
@@ -40,7 +40,7 @@ public class $className implements org.cryptomator.presentation.intent.IntentBui
      *
      * @throws IllegalStateException if some required extras or the context were not set
      */
-    public void startActivity(org.cryptomator.presentation.presenter.ContextHolder contextHolder) {
+    public void startActivity(de.ninafoss.presentation.presenter.ContextHolder contextHolder) {
         contextHolder.context().startActivity(build(contextHolder));
     }
 
@@ -48,7 +48,7 @@ public class $className implements org.cryptomator.presentation.intent.IntentBui
      * @return an {@code Intent} with all values set before
      * @throws IllegalStateException if some required extras or the context were not set
      */
-    public android.content.Intent build(org.cryptomator.presentation.presenter.ContextHolder contextHolder) {
+    public android.content.Intent build(de.ninafoss.presentation.presenter.ContextHolder contextHolder) {
         validate();
         android.content.Intent intent = new android.content.Intent(contextHolder.context(), ${targetActivity}.class);
         if (preventGoingBackInHistory) {

@@ -49,11 +49,6 @@ android {
 			crunchPngs false
 			minifyEnabled false
 			shrinkResources false
-
-			buildConfigField "String", "DROPBOX_API_KEY", "\"" + getApiKey('DROPBOX_API_KEY') + "\""
-			manifestPlaceholders = [DROPBOX_API_KEY: getApiKey('DROPBOX_API_KEY')]
-			buildConfigField "String", "PCLOUD_CLIENT_ID", "\"" + getApiKey('PCLOUD_CLIENT_ID') + "\""
-
 			resValue "string", "app_id", androidApplicationId
 		}
 
@@ -64,11 +59,6 @@ android {
 			minifyEnabled false
 			shrinkResources false
 			testCoverageEnabled false
-
-			buildConfigField "String", "DROPBOX_API_KEY", "\"" + getApiKey('DROPBOX_API_KEY_DEBUG') + "\""
-			manifestPlaceholders = [DROPBOX_API_KEY: getApiKey('DROPBOX_API_KEY_DEBUG')]
-			buildConfigField "String", "PCLOUD_CLIENT_ID", "\"" + getApiKey('PCLOUD_CLIENT_ID_DEBUG') + "\""
-
 			applicationIdSuffix ".debug"
 			versionNameSuffix '-DEBUG'
 
@@ -92,20 +82,6 @@ android {
 		}
 	}
 
-	sourceSets {
-		playstore {
-			java.srcDirs = ['src/main/java', 'src/main/java/', 'src/notFoss/java', 'src/notFoss/java/']
-		}
-
-		apkstore {
-			java.srcDirs = ['src/main/java', 'src/main/java/', 'src/notFoss/java', 'src/notFoss/java/']
-		}
-
-		fdroid {
-			java.srcDirs = ['src/main/java', 'src/main/java/', 'src/foss/java', 'src/foss/java/']
-		}
-	}
-
 	packagingOptions {
 		exclude 'META-INF/jersey-module-version'
 		exclude 'META-INF/DEPENDENCIES'
@@ -124,6 +100,8 @@ dependencies {
 
 	coreLibraryDesugaring dependencies.coreDesugaring
 
+	implementation("com.google.guava:guava:31.0.1-android")
+
 	// dagger
 	kapt dependencies.daggerCompiler
 	implementation dependencies.dagger
@@ -131,7 +109,6 @@ dependencies {
 	implementation dependencies.appcompat
 	implementation dependencies.recyclerView
 	implementation dependencies.design
-	implementation project(':subsampling-image-view')
 	implementation dependencies.recyclerViewFastScroll
 
 	// android x
@@ -140,51 +117,11 @@ dependencies {
 	implementation dependencies.androidxViewpager
 	implementation dependencies.androidxSwiperefresh
 	implementation dependencies.androidxPreference
-	implementation dependencies.androidxBiometric
-
-	// cloud
-	implementation dependencies.dropbox
-	implementation dependencies.msgraph
-
-	playstoreImplementation(dependencies.googleApiServicesDrive) {
-		exclude module: 'guava-jdk5'
-		exclude module: 'httpclient'
-		exclude module: 'googlehttpclient'
-		exclude group: "com.google.http-client", module: "google-http-client"
-	}
-	apkstoreImplementation(dependencies.googleApiServicesDrive) {
-		exclude module: 'guava-jdk5'
-		exclude module: 'httpclient'
-		exclude group: "com.google.http-client", module: "google-http-client"
-	}
-
-	playstoreImplementation(dependencies.googleApiClientAndroid) {
-		exclude module: 'guava-jdk5'
-		exclude module: 'httpclient'
-		exclude module: "google-http-client"
-		exclude module: "jetified-google-http-client"
-		exclude group: "com.google.http-client", module: "google-http-client"
-		exclude group: "com.google.http-client", module: "jetified-google-http-client"
-	}
-	apkstoreImplementation(dependencies.googleApiClientAndroid) {
-		exclude module: 'guava-jdk5'
-		exclude module: 'httpclient'
-		exclude module: "google-http-client"
-		exclude module: "jetified-google-http-client"
-		exclude group: "com.google.http-client", module: "google-http-client"
-		exclude group: "com.google.http-client", module: "jetified-google-http-client"
-	}
-
-	playstoreImplementation dependencies.trackingFreeGoogleCLient
-	apkstoreImplementation dependencies.trackingFreeGoogleCLient
-	playstoreImplementation dependencies.trackingFreeGoogleAndroidCLient
-	apkstoreImplementation dependencies.trackingFreeGoogleAndroidCLient
 
 	// rest
 	implementation dependencies.rxJava
 	implementation dependencies.rxAndroid
 	compileOnly dependencies.javaxAnnotation
-	implementation dependencies.zxcvbn
 	implementation dependencies.rxBinding
 
 	// multidex

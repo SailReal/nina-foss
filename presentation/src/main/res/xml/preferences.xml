@@ -3,16 +3,6 @@
 	android:id="@+id/activityRootView">
 
 	<PreferenceCategory
-		android:key="license"
-		android:title="@string/screen_settings_license">
-
-		<androidx.preference.PreferenceScreen
-			android:enabled="false"
-			android:key="mail" />
-
-	</PreferenceCategory>
-
-	<PreferenceCategory
 		android:key="@string/screen_settings_section_general"
 		android:title="@string/screen_settings_section_general">
 
@@ -20,7 +10,7 @@
 
 			<intent
 				android:action="android.intent.action.MAIN"
-				android:targetClass="org.cryptomator.presentation.ui.activity.CloudSettingsActivity"
+				android:targetClass="de.ninafoss.presentation.ui.activity.CloudSettingsActivity"
 				android:targetPackage="@string/app_id" />
 
 		</androidx.preference.PreferenceScreen>
@@ -31,7 +21,7 @@
 
 			<intent
 				android:action="android.intent.action.MAIN"
-				android:targetClass="org.cryptomator.presentation.ui.activity.BiometricAuthSettingsActivity"
+				android:targetClass="de.ninafoss.presentation.ui.activity.BiometricAuthSettingsActivity"
 				android:targetPackage="@string/app_id" />
 
 		</androidx.preference.PreferenceScreen>
@@ -92,71 +82,6 @@
 			android:key="lockTimeout"
 			android:summary="%s"
 			android:title="@string/screen_settings_auto_lock_timeout" />
-
-	</PreferenceCategory>
-
-	<PreferenceCategory
-		android:key="@string/screen_settings_section_auto_photo_upload"
-		android:title="@string/screen_settings_section_auto_photo_upload">
-
-		<androidx.preference.SwitchPreferenceCompat
-			android:defaultValue="false"
-			android:key="photoUpload"
-			android:summary="@string/screen_settings_section_auto_photo_upload_toggle_summary"
-			android:title="@string/screen_settings_section_auto_photo_upload_toggle" />
-
-		<androidx.preference.SwitchPreferenceCompat
-			android:defaultValue="true"
-			android:key="photoUploadInstant"
-			android:summary="@string/screen_settings_section_auto_photo_upload_toggle_instant_upload_summary"
-			android:title="@string/screen_settings_section_auto_photo_upload_toggle_instant_upload" />
-
-		<androidx.preference.SwitchPreferenceCompat
-			android:defaultValue="true"
-			android:key="photoUploadOnlyUsingWifi"
-			android:title="@string/screen_settings_section_auto_photo_upload_only_wifi_toggle" />
-
-		<androidx.preference.SwitchPreferenceCompat
-			android:defaultValue="false"
-			android:key="photoUploadIncludingVideos"
-			android:title="@string/screen_settings_section_auto_photo_upload_including_videos" />
-
-		<androidx.preference.PreferenceScreen
-			android:key="photoUploadVault"
-			android:title="@string/screen_settings_section_auto_photo_upload_vault">
-
-			<intent
-				android:action="android.intent.action.MAIN"
-				android:targetClass="org.cryptomator.presentation.ui.activity.AutoUploadChooseVaultActivity"
-				android:targetPackage="@string/app_id" />
-		</androidx.preference.PreferenceScreen>
-
-	</PreferenceCategory>
-
-	<PreferenceCategory android:title="@string/screen_settings_lru_cache">
-
-		<androidx.preference.SwitchPreferenceCompat
-			android:defaultValue="true"
-			android:key="lruCache"
-			android:summary="@string/screen_settings_lru_cache_toggle_summary"
-			android:title="@string/screen_settings_lru_cache_toggle" />
-
-		<ListPreference
-			android:defaultValue="100"
-			android:dialogTitle="@string/dialog_cache_size_title"
-			android:entries="@array/cache_size_entries"
-			android:entryValues="@array/cache_size_values"
-			android:key="lruCacheSize"
-			android:summary="%s"
-			android:title="@string/dialog_cache_size_title" />
-
-		<androidx.preference.PreferenceScreen
-			android:key="displayLruCacheSize"
-			android:title="@string/screen_settings_lru_cache_size" />
-
-		<androidx.preference.PreferenceScreen
-			android:key="lruCacheClear"
-			android:title="@string/screen_settings_clear_lru_cache_size" />
 
 	</PreferenceCategory>
 
@@ -222,7 +147,7 @@
 		<androidx.preference.PreferenceScreen android:title="@string/screen_settings_licenses_label">
 			<intent
 				android:action="android.intent.action.MAIN"
-				android:targetClass="org.cryptomator.presentation.ui.activity.LicensesActivity"
+				android:targetClass="de.ninafoss.presentation.ui.activity.LicensesActivity"
 				android:targetPackage="@string/app_id" />
 		</androidx.preference.PreferenceScreen>
 

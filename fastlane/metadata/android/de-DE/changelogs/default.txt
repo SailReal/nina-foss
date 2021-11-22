@@ -1,1 +1,0 @@
-- App-Absturz behoben, wenn der für den automatischen Upload angegebene Tresor nicht mehr existiert und der Upload beginnt

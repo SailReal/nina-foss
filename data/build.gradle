@@ -34,20 +34,7 @@ android {
 		ignoreWarnings true
 	}
 
-	buildTypes {
-		release {
-			buildConfigField "String", "ONEDRIVE_API_KEY", "\"" + getApiKey('ONEDRIVE_API_KEY') + "\""
-			buildConfigField "String", "ONEDRIVE_API_REDIRCT_URI", "\"" + getApiKey('ONEDRIVE_API_REDIRCT_URI') + "\""
-		}
-
-		debug {
-			buildConfigField "String", "ONEDRIVE_API_KEY", "\"" + getApiKey('ONEDRIVE_API_KEY_DEBUG') + "\""
-			buildConfigField "String", "ONEDRIVE_API_REDIRCT_URI", "\"" + getApiKey('ONEDRIVE_API_REDIRCT_URI_DEBUG') + "\""
-		}
-	}
-
 	flavorDimensions "version"
-
 	productFlavors {
 		playstore {
 			dimension "version"
@@ -62,27 +49,13 @@ android {
 		}
 	}
 
-	sourceSets {
-		playstore {
-			java.srcDirs = ['src/main/java', 'src/main/java/', 'src/notFoss/java', 'src/notFoss/java/']
-		}
-
-		apkstore {
-			java.srcDirs = ['src/main/java', 'src/main/java/', 'src/notFoss/java', 'src/notFoss/java/']
-		}
-
-		fdroid {
-			java.srcDirs = ['src/main/java', 'src/main/java/', 'src/foss/java', 'src/foss/java/']
-		}
-	}
-
 	packagingOptions {
 		exclude 'META-INF/DEPENDENCIES'
 	}
 }
 
 greendao {
-	schemaVersion 10
+	schemaVersion 1
 }
 
 configurations.all {
@@ -95,13 +68,8 @@ dependencies {
 
 	implementation project(':domain')
 	implementation project(':util')
-	implementation project(':msa-auth-for-android')
-	implementation project(':pcloud-sdk-java')
 
 	coreLibraryDesugaring dependencies.coreDesugaring
-
-	// cryptomator
-	implementation dependencies.cryptolib
 
 	// greendao
 	api dependencies.greenDao
@@ -109,64 +77,7 @@ dependencies {
 	annotationProcessor dependencies.daggerCompiler
 	implementation dependencies.dagger
 
-	api dependencies.jsonWebTokenApi
-	implementation dependencies.jsonWebTokenImpl
-	implementation dependencies.jsonWebTokenJson
-
-	// cloud
-	implementation dependencies.dropbox
-	implementation dependencies.msgraph
-
-	implementation dependencies.stax
-	api dependencies.minIo
-
-	playstoreImplementation(dependencies.googlePlayServicesAuth) {
-		exclude module: 'guava-jdk5'
-		exclude module: 'httpclient'
-		exclude module: 'googlehttpclient'
-		exclude group: "com.google.http-client", module: "google-http-client"
-	}
-	apkstoreImplementation(dependencies.googlePlayServicesAuth) {
-		exclude module: 'guava-jdk5'
-		exclude module: 'httpclient'
-		exclude module: "google-http-client"
-		exclude group: "com.google.http-client", module: "google-http-client"
-	}
-
-	playstoreImplementation(dependencies.googleApiServicesDrive) {
-		exclude module: 'guava-jdk5'
-		exclude module: 'httpclient'
-		exclude module: 'googlehttpclient'
-		exclude group: "com.google.http-client", module: "google-http-client"
-	}
-	apkstoreImplementation(dependencies.googleApiServicesDrive) {
-		exclude module: 'guava-jdk5'
-		exclude module: 'httpclient'
-		exclude module: "google-http-client"
-		exclude group: "com.google.http-client", module: "google-http-client"
-	}
-
-	playstoreImplementation(dependencies.googleApiClientAndroid) {
-		exclude module: 'guava-jdk5'
-		exclude module: 'httpclient'
-		exclude module: "google-http-client"
-		exclude module: "jetified-google-http-client"
-		exclude group: "com.google.http-client", module: "google-http-client"
-		exclude group: "com.google.http-client", module: "jetified-google-http-client"
-	}
-	apkstoreImplementation(dependencies.googleApiClientAndroid) {
-		exclude module: 'guava-jdk5'
-		exclude module: 'httpclient'
-		exclude module: "google-http-client"
-		exclude module: "jetified-google-http-client"
-		exclude group: "com.google.http-client", module: "google-http-client"
-		exclude group: "com.google.http-client", module: "jetified-google-http-client"
-	}
-
-	playstoreImplementation dependencies.trackingFreeGoogleCLient
-	apkstoreImplementation dependencies.trackingFreeGoogleCLient
-	playstoreImplementation dependencies.trackingFreeGoogleAndroidCLient
-	apkstoreImplementation dependencies.trackingFreeGoogleAndroidCLient
+	implementation("com.google.guava:guava:31.0.1-android")
 
 	// rest
 	implementation dependencies.rxJava
@@ -204,10 +115,6 @@ dependencies {
 
 configurations {
 	all*.exclude group: 'com.google.android', module: 'android'
-}
-
-static def getApiKey(key) {
-	return System.getenv().getOrDefault(key, "")
 }
 
 tasks.withType(Test) {

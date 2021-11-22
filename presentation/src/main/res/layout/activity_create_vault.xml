@@ -5,7 +5,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:fitsSystemWindows="true"
-	tools:context=".ui.activity.CreateVaultActivity">
+	tools:context=".ui.activity.CreateLocationActivity">
 
 	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
@@ -15,6 +15,6 @@
 
 	</com.google.android.material.appbar.AppBarLayout>
 
-	<include layout="@layout/content_create_vault" />
+	<include layout="layout/content_create_vault" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

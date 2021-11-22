@@ -1,15 +1,15 @@
 package ${javaPackage};
 
-@javax.annotation.Generated("org.cryptomator.generator.CallbackProcessor")
+@javax.annotation.Generated("de.ninafoss.generator.CallbackProcessor")
 class ${callbacksClassName} {
 
 #foreach( $callback in ${callbacks} )
-    public static org.cryptomator.generator.BoundCallback<${callback.declaringTypeName},${callback.resultTypeName}> ${callback.name}(
+    public static de.ninafoss.generator.BoundCallback<${callback.declaringTypeName},${callback.resultTypeName}> ${callback.name}(
         #foreach( $paramType in ${callback.additionalParameterTypes} )
             ${paramType} param${foreach.count}#if( $foreach.hasNext ),#end
         #end
     ) {
-        return new org.cryptomator.generator.BoundCallback<${callback.declaringTypeName},${callback.resultTypeName}>(
+        return new de.ninafoss.generator.BoundCallback<${callback.declaringTypeName},${callback.resultTypeName}>(
             ${callback.declaringTypeName}.class,
             ${callback.resultTypeName}.class
             #foreach( $paramType in ${callback.additionalParameterTypes} )

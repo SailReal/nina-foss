@@ -1,9 +1,9 @@
 package $javaPackage;
 
 /**
- * Provides methods to save and restore values of {@link org.cryptomator.generator.InstanceState} annotated classes using a Bundle.
+ * Provides methods to save and restore values of {@link InstanceState} annotated classes using a Bundle.
  */
-@javax.annotation.Generated("org.cryptomator.generator.InstanceStateProcessor")
+@javax.annotation.Generated("de.ninafoss.generator.InstanceStateProcessor")
 public class InstanceStates {
 
     private static final int SAVE = 0;

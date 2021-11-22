@@ -55,9 +55,7 @@ dependencies {
 
 	implementation dependencies.appcompat
 
-	api dependencies.jsonWebTokenApi
-	implementation dependencies.jsonWebTokenImpl
-	implementation dependencies.jsonWebTokenJson
+	implementation("com.google.guava:guava:31.0.1-android")
 
 	// test
 	testImplementation dependencies.junit

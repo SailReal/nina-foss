@@ -37,7 +37,7 @@ def getVersionCode = { ->
 
 allprojects {
 	ext {
-		androidApplicationId = 'org.cryptomator'
+		androidApplicationId = 'de.ninafoss'
 		androidVersionCode = getVersionCode()
 		androidVersionName = '1.7.0-SNAPSHOT'
 	}
@@ -45,9 +45,6 @@ allprojects {
 		mavenCentral()
 		maven {
 			url "https://maven.google.com"
-		}
-		flatDir {
-			dirs '../libs'
 		}
 		google()
 	}

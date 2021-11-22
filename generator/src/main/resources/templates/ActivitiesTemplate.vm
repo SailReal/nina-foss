@@ -3,10 +3,10 @@ package $javaPackage;
 /**
  * Provides methods to read and build {@link android.content.Intent Intents}.
  */
-@javax.annotation.Generated("org.cryptomator.generator.ActivityProcessor")
+@javax.annotation.Generated("de.ninafoss.generator.ActivityProcessor")
 class $className {
 
-    public static void inject(org.cryptomator.presentation.di.component.ActivityComponent component, org.cryptomator.presentation.ui.activity.BaseActivity activity) {
+    public static void inject(de.ninafoss.presentation.di.component.ActivityComponent component, de.ninafoss.presentation.ui.activity.BaseActivity activity) {
 #foreach( $activity in $activities )
         if (activity instanceof $activity.qualifiedName) {
             component.inject(($activity.qualifiedName)activity);
@@ -17,7 +17,7 @@ class $className {
         }
     }
 
-    public static org.cryptomator.presentation.presenter.Presenter initializePresenter(org.cryptomator.presentation.ui.activity.BaseActivity activity) {
+    public static de.ninafoss.presentation.presenter.Presenter initializePresenter(de.ninafoss.presentation.ui.activity.BaseActivity activity) {
 #foreach( $activity in $activities )
     if (activity instanceof $activity.qualifiedName) {
         #if ($activity.hasPresenter)
@@ -38,12 +38,12 @@ class $className {
         }
     }
 
-    public static void setIntent(org.cryptomator.presentation.ui.activity.BaseActivity activity) {
+    public static void setIntent(de.ninafoss.presentation.ui.activity.BaseActivity activity) {
 #foreach( $activity in $activities )
     #if ($activity.hasIntentField)
         if (activity instanceof $activity.qualifiedName) {
             $activity.qualifiedName castActivity = ($activity.qualifiedName)activity;
-            castActivity.${activity.intentFieldName} = org.cryptomator.presentation.intent.Intents.${activity.methodInIntentsName}(castActivity);
+            castActivity.${activity.intentFieldName} = de.ninafoss.presentation.intent.Intents.${activity.methodInIntentsName}(castActivity);
         } else
     #end
 #end

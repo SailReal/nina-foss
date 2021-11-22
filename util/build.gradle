@@ -38,8 +38,7 @@ android {
 
 dependencies {
 	def dependencies = rootProject.ext.dependencies
-	// cryptomator
-	api dependencies.cryptolib
+
 	api dependencies.dagger
 	api dependencies.timber
 	api dependencies.appcompat
@@ -48,6 +47,8 @@ dependencies {
 	implementation dependencies.lruFileCache
 
 	implementation dependencies.androidxPreference
+
+	implementation("com.google.guava:guava:31.0.1-android")
 
 	// test
 	androidTestImplementation dependencies.androidxTestCore

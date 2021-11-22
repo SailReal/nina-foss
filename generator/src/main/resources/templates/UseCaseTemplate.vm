@@ -2,27 +2,27 @@ package $packageName;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-@javax.annotation.Generated("org.cryptomator.generator.UseCaseProcessor")
-@org.cryptomator.domain.di.PerView
-public class $simpleName implements org.cryptomator.generator.Unsubscribable {
+@javax.annotation.Generated("de.ninafoss.generator.UseCaseProcessor")
+@de.ninafoss.domain.di.PerView
+public class $simpleName implements de.ninafoss.generator.Unsubscribable {
 
     private static final AtomicInteger EXECUTION_ID = new AtomicInteger((int)System.currentTimeMillis() & 0x7fffffff);
 
-    private final org.cryptomator.domain.executor.PostExecutionThread postExecutionThread;
-    private final org.cryptomator.domain.executor.ThreadExecutor threadExecutor;
+    private final de.ninafoss.domain.executor.PostExecutionThread postExecutionThread;
+    private final de.ninafoss.domain.executor.ThreadExecutor threadExecutor;
 
 #foreach( $anInjected in $injected )
     private final $anInjected.type $anInjected.lowerCaseName;
 #end
 
     private $implClassName impl;
-    private org.cryptomator.domain.executor.BackgroundTasks.Registration registration;
+    private de.ninafoss.domain.executor.BackgroundTasks.Registration registration;
     private io.reactivex.disposables.Disposable disposable = io.reactivex.internal.disposables.EmptyDisposable.INSTANCE;
 
     @javax.inject.Inject
     public ${simpleName}(
-            org.cryptomator.domain.executor.ThreadExecutor threadExecutor,
-            org.cryptomator.domain.executor.PostExecutionThread postExecutionThread
+            de.ninafoss.domain.executor.ThreadExecutor threadExecutor,
+            de.ninafoss.domain.executor.PostExecutionThread postExecutionThread
 #foreach( $anInjected in $injected )
             ,$anInjected.type $anInjected.lowerCaseName
 #end        ) {
@@ -79,14 +79,14 @@ public class $simpleName implements org.cryptomator.generator.Unsubscribable {
 #end
 
 #if ( $hasProgressAware )
-        public void run(final org.cryptomator.domain.usecases.ProgressAwareResultHandler<$resultClassName,$progressStateName> resultHandler) {
+        public void run(final de.ninafoss.domain.usecases.ProgressAwareResultHandler<$resultClassName,$progressStateName> resultHandler) {
 #else
-        public void run(final org.cryptomator.domain.usecases.ResultHandler<$resultClassName> resultHandler) {
+        public void run(final de.ninafoss.domain.usecases.ResultHandler<$resultClassName> resultHandler) {
 #end
             if(registration != null) {
                 registration.unregister();
             }
-            registration = org.cryptomator.domain.executor.BackgroundTasks.register(${simpleName}.class);
+            registration = de.ninafoss.domain.executor.BackgroundTasks.register(${simpleName}.class);
             validate();
             impl = new ${implClassName}(
 #foreach ( $injectedOrParam in $injectedAndParams )
@@ -101,7 +101,7 @@ public class $simpleName implements org.cryptomator.generator.Unsubscribable {
 #end
             );
 #if ( $hasProgressAware )
-            final io.reactivex.subscribers.DisposableSubscriber<org.cryptomator.domain.usecases.ResultWithProgress<$resultClassName,$progressStateName>> subscriber = new io.reactivex.subscribers.DisposableSubscriber<org.cryptomator.domain.usecases.ResultWithProgress<$resultClassName,$progressStateName>>(){
+            final io.reactivex.subscribers.DisposableSubscriber<de.ninafoss.domain.usecases.ResultWithProgress<$resultClassName,$progressStateName>> subscriber = new io.reactivex.subscribers.DisposableSubscriber<de.ninafoss.domain.usecases.ResultWithProgress<$resultClassName,$progressStateName>>(){
                 @Override
                 public void onComplete() {
                     resultHandler.onFinished();
@@ -112,7 +112,7 @@ public class $simpleName implements org.cryptomator.generator.Unsubscribable {
                     resultHandler.onFinished();
                 }
                 @Override
-                public void onNext(org.cryptomator.domain.usecases.ResultWithProgress<$resultClassName,$progressStateName> result) {
+                public void onNext(de.ninafoss.domain.usecases.ResultWithProgress<$resultClassName,$progressStateName> result) {
                     resultHandler.onProgress(result.progress());
                     if (result.value() != null) {
                         resultHandler.onSuccess(result.value());
@@ -120,12 +120,12 @@ public class $simpleName implements org.cryptomator.generator.Unsubscribable {
                 }
             };
             ${simpleName}.this.disposable = subscriber;
-            io.reactivex.Flowable.fromPublisher(new org.reactivestreams.Publisher<org.cryptomator.domain.usecases.ResultWithProgress<$resultClassName,$progressStateName>>(){
-                public void subscribe(final org.reactivestreams.Subscriber<? super org.cryptomator.domain.usecases.ResultWithProgress<$resultClassName,$progressStateName>> subscriber) {
-                    org.cryptomator.domain.usecases.ProgressAware<$progressStateName> progressAware = new org.cryptomator.domain.usecases.ThrottlingProgressAware<$progressStateName>(new org.cryptomator.domain.usecases.ProgressAware<$progressStateName>() {
+            io.reactivex.Flowable.fromPublisher(new org.reactivestreams.Publisher<de.ninafoss.domain.usecases.ResultWithProgress<$resultClassName,$progressStateName>>(){
+                public void subscribe(final org.reactivestreams.Subscriber<? super de.ninafoss.domain.usecases.ResultWithProgress<$resultClassName,$progressStateName>> subscriber) {
+                    de.ninafoss.domain.usecases.ProgressAware<$progressStateName> progressAware = new de.ninafoss.domain.usecases.ThrottlingProgressAware<$progressStateName>(new de.ninafoss.domain.usecases.ProgressAware<$progressStateName>() {
                         @Override
-                        public void onProgress(org.cryptomator.domain.usecases.cloud.Progress<$progressStateName> progress) {
-                            subscriber.onNext(org.cryptomator.domain.usecases.ResultWithProgress.<$resultClassName,$progressStateName>progress(progress));
+                        public void onProgress(de.ninafoss.domain.usecases.cloud.Progress<$progressStateName> progress) {
+                            subscriber.onNext(de.ninafoss.domain.usecases.ResultWithProgress.<$resultClassName,$progressStateName>progress(progress));
                         }
                     });
 
@@ -134,13 +134,13 @@ public class $simpleName implements org.cryptomator.generator.Unsubscribable {
                         #if ($resultIsVoid)
                             timber.log.Timber.tag("${simpleName}").d("started %x", id);
                             impl.execute(progressAware);
-                            subscriber.onNext(org.cryptomator.domain.usecases.ResultWithProgress.<$resultClassName,$progressStateName>finalResult(null));
+                            subscriber.onNext(de.ninafoss.domain.usecases.ResultWithProgress.<$resultClassName,$progressStateName>finalResult(null));
                             timber.log.Timber.tag("${simpleName}").d("finished %x", id);
                             subscriber.onComplete();
                             registration.unregister();
                         #else
                             timber.log.Timber.tag("${simpleName}").d("started %x", id);
-                            subscriber.onNext(org.cryptomator.domain.usecases.ResultWithProgress.<$resultClassName,$progressStateName>finalResult(impl.execute(progressAware)));
+                            subscriber.onNext(de.ninafoss.domain.usecases.ResultWithProgress.<$resultClassName,$progressStateName>finalResult(impl.execute(progressAware)));
                             timber.log.Timber.tag("${simpleName}").d("finished %x", id);
                             subscriber.onComplete();
                             registration.unregister();
@@ -218,11 +218,11 @@ public class $simpleName implements org.cryptomator.generator.Unsubscribable {
     }
 #else ## $hasParameters
 
-public void run(final org.cryptomator.domain.usecases.ResultHandler<$resultClassName> resultHandler) {
+public void run(final de.ninafoss.domain.usecases.ResultHandler<$resultClassName> resultHandler) {
         if(registration != null) {
                     registration.unregister();
         }
-        registration = org.cryptomator.domain.executor.BackgroundTasks.register(${simpleName}.class);
+        registration = de.ninafoss.domain.executor.BackgroundTasks.register(${simpleName}.class);
         impl = new ${implClassName}(
 #foreach ( $anInjected in $injected )
             this.$anInjected.lowerCaseName

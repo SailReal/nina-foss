@@ -3,7 +3,7 @@ package $javaPackage;
 /**
  * Provides extra data of {@link android.content.Intent Intents} from {@link ${targetActivity}}.
  */
-@javax.annotation.Generated("org.cryptomator.generator.IntentProcessor")
+@javax.annotation.Generated("de.ninafoss.generator.IntentProcessor")
 class $className implements $intentInterface {
 
 #foreach( $parameter in $parameters )

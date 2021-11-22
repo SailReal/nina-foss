@@ -3,7 +3,7 @@ package $javaPackage;
 /**
  * Provides methods to read and build {@link android.content.Intent Intents}.
  */
-@javax.annotation.Generated("org.cryptomator.generator.IntentProcessor")
+@javax.annotation.Generated("de.ninafoss.generator.IntentProcessor")
 public class $className {
 
 #foreach( $builder in $builders )

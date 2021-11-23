@@ -7,6 +7,7 @@ import javax.inject.Inject
 import de.ninafoss.domain.Message
 import de.ninafoss.generator.Activity
 import de.ninafoss.presentation.R
+import de.ninafoss.presentation.intent.Intents.settingsIntent
 import de.ninafoss.presentation.model.ProgressModel
 import de.ninafoss.presentation.presenter.MessageListPresenter
 import de.ninafoss.presentation.ui.activity.view.MessageListView
@@ -46,7 +47,7 @@ class MessageListActivity : BaseActivity(), //
 
 	override fun onMenuItemSelected(itemId: Int): Boolean = when (itemId) {
 		R.id.action_settings -> {
-			//messageListPresenter.startIntent(settingsIntent())
+			messageListPresenter.startIntent(settingsIntent())
 			true
 		}
 		else -> super.onMenuItemSelected(itemId)

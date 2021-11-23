@@ -94,6 +94,10 @@ dependencies {
 
 	implementation dependencies.lruFileCache
 
+	api dependencies.jsonWebTokenApi
+	implementation dependencies.jsonWebTokenImpl
+	implementation dependencies.jsonWebTokenJson
+
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
 	// test

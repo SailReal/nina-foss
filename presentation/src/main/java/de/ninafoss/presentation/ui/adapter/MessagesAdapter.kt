@@ -4,8 +4,8 @@ import android.view.View
 import javax.inject.Inject
 import de.ninafoss.domain.Message
 import de.ninafoss.presentation.R
-import kotlinx.android.synthetic.main.item_vault.view.messageName
-import kotlinx.android.synthetic.main.item_vault.view.settings
+import kotlinx.android.synthetic.main.item_message.view.messageName
+import kotlinx.android.synthetic.main.item_message.view.settings
 
 class MessagesAdapter @Inject
 internal constructor() : RecyclerViewBaseAdapter<Message, MessagesAdapter.OnItemInteractionListener, MessagesAdapter.MessageViewHolder>() {
@@ -18,7 +18,7 @@ internal constructor() : RecyclerViewBaseAdapter<Message, MessagesAdapter.OnItem
 	}
 
 	override fun getItemLayout(viewType: Int): Int {
-		return R.layout.item_vault
+		return R.layout.item_message
 	}
 
 	override fun createViewHolder(view: View, viewType: Int): MessageViewHolder {

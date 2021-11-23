@@ -19,6 +19,6 @@ public class DoUpdate {
 	}
 
 	public void execute() throws BackendException {
-		//updateCheckRepository.update(file); FIXME
+		updateCheckRepository.update(file);
 	}
 }

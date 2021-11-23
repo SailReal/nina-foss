@@ -72,6 +72,8 @@ ext {
 	androidxDocumentfileVersion = '1.0.1'
 	androidxTestCoreVersion = '1.4.0'
 
+	jsonWebTokenApiVersion = '0.11.2'
+
 	dependencies = [
 			android               : "com.google.android:android:${androidVersion}",
 			androidAnnotations    : "androidx.annotation:annotation:${androidSupportAnnotationsVersion}",
@@ -116,7 +118,10 @@ ext {
 			rules                 : "androidx.test:rules:${rulesVersion}",
 			contribution          : "androidx.test.espresso:espresso-contrib:${contributionVersion}",
 			uiAutomator           : "androidx.test.uiautomator:uiautomator:${uiautomatorVersion}",
-			lruFileCache          : "com.github.solkin:disk-lru-cache:${lruFileCacheVersion}"
+			lruFileCache          : "com.github.solkin:disk-lru-cache:${lruFileCacheVersion}",
+			jsonWebTokenApi       : "io.jsonwebtoken:jjwt-api:${jsonWebTokenApiVersion}",
+			jsonWebTokenImpl      : "io.jsonwebtoken:jjwt-impl:${jsonWebTokenApiVersion}",
+			jsonWebTokenJson      : "io.jsonwebtoken:jjwt-orgjson:${jsonWebTokenApiVersion}"
 	]
 
 }

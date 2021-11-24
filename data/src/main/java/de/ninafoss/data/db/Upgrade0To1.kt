@@ -9,8 +9,14 @@ import de.ninafoss.data.db.Sql.SqlCreateTableBuilder.ForeignKeyBehaviour
 internal class Upgrade0To1 @Inject constructor() : DatabaseUpgrade(0, 1) {
 
 	override fun internalApplyTo(db: Database, origin: Int) {
-		createLocationEntityTable(db)
-		createMessageEntityTable(db)
+		db.beginTransaction()
+		try {
+			createLocationEntityTable(db)
+			createMessageEntityTable(db)
+			db.setTransactionSuccessful()
+		} finally {
+			db.endTransaction()
+		}
 	}
 
 	private fun createLocationEntityTable(db: Database) {
@@ -25,7 +31,15 @@ internal class Upgrade0To1 @Inject constructor() : DatabaseUpgrade(0, 1) {
 		Sql.createTable("MESSAGE_ENTITY") //
 			.id() //
 			.optionalInt("LOCATION_ID") //
+			.requiredText("REMOTE_VERSION") //
+			.requiredText("START_DATE") //
+			.requiredText("SEVERITY") //
+			.requiredText("TYPE") //
+			.requiredText("HEADLINE") //
 			.requiredText("MESSAGE") //
+			.requiredText("PROVIDER") //
+			.requiredText("MSG_TYPE") //
+			.requiredText("SENT_DATE") //
 			.foreignKey("LOCATION_ID", "LOCATION_ENTITY", ForeignKeyBehaviour.ON_DELETE_SET_NULL) //
 			.executeOn(db)
 	}

@@ -18,7 +18,23 @@ public class MessageEntity extends DatabaseEntity {
 	@ToOne(joinProperty = "locationId")
 	private LocationEntity locationEntity;
 
+	private String remoteVersion;
+
+	private String startDate;
+
+	private String severity;
+
+	private String type;
+
+	private String headline;
+
 	private String message;
+
+	private String provider;
+
+	private String msgType;
+
+	private String sentDate;
 
 	/** Used to resolve relations */
 	@Generated(hash = 2040040024)
@@ -28,11 +44,20 @@ public class MessageEntity extends DatabaseEntity {
 	@Generated(hash = 499759967)
 	private transient MessageEntityDao myDao;
 
-	@Generated(hash = 864867035)
-	public MessageEntity(Long id, Long locationId, String message) {
+	@Generated(hash = 1775206661)
+	public MessageEntity(Long id, Long locationId, String remoteVersion, String startDate, String severity, String type, String headline, String message,
+			String provider, String msgType, String sentDate) {
 		this.id = id;
 		this.locationId = locationId;
+		this.remoteVersion = remoteVersion;
+		this.startDate = startDate;
+		this.severity = severity;
+		this.type = type;
+		this.headline = headline;
 		this.message = message;
+		this.provider = provider;
+		this.msgType = msgType;
+		this.sentDate = sentDate;
 	}
 
 	@Generated(hash = 1797882234)
@@ -138,6 +163,70 @@ public class MessageEntity extends DatabaseEntity {
 			throw new DaoException("Entity is detached from DAO context");
 		}
 		myDao.update(this);
+	}
+
+	public String getRemoteVersion() {
+		return this.remoteVersion;
+	}
+
+	public void setRemoteVersion(String remoteVersion) {
+		this.remoteVersion = remoteVersion;
+	}
+
+	public String getStartDate() {
+		return this.startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getSeverity() {
+		return this.severity;
+	}
+
+	public void setSeverity(String severity) {
+		this.severity = severity;
+	}
+
+	public String getType() {
+		return this.type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getHeadline() {
+		return this.headline;
+	}
+
+	public void setHeadline(String headline) {
+		this.headline = headline;
+	}
+
+	public String getProvider() {
+		return this.provider;
+	}
+
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
+
+	public String getMsgType() {
+		return this.msgType;
+	}
+
+	public void setMsgType(String msgType) {
+		this.msgType = msgType;
+	}
+
+	public String getSentDate() {
+		return this.sentDate;
+	}
+
+	public void setSentDate(String sentDate) {
+		this.sentDate = sentDate;
 	}
 
 	/** called by internal mechanisms, do not call yourself. */

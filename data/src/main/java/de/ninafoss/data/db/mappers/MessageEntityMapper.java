@@ -24,8 +24,16 @@ public class MessageEntityMapper extends EntityMapper<MessageEntity, Message> {
 	public Message fromEntity(MessageEntity entity) throws BackendException {
 		return aMessage() //
 				.withId(entity.getId()) //
-				.withMessage(entity.getMessage()) //
 				.withLocation(locationFrom(entity)) //
+				.withRemoveVersion(entity.getRemoteVersion()) //
+				.withStartDate(entity.getStartDate()) //
+				.withSeverity(entity.getSeverity()) //
+				.withType(entity.getType()) //
+				.withHeadline(entity.getHeadline()) //
+				.withMessage(entity.getMessage()) //
+				.withProvider(entity.getProvider()) //
+				.withType(entity.getType()) //
+				.withSentDate(entity.getSentDate()) //
 				.build();
 	}
 
@@ -39,11 +47,19 @@ public class MessageEntityMapper extends EntityMapper<MessageEntity, Message> {
 	@Override
 	public MessageEntity toEntity(de.ninafoss.domain.Message domainObject) {
 		MessageEntity entity = new MessageEntity();
-		entity.setId(domainObject.getId());
-		entity.setMessage(domainObject.getMessage());
+		entity.setId(domainObject.getId());;
 		if (domainObject.getLocation() != null) {
 			entity.setLocation(locationEntityMapper.toEntity(domainObject.getLocation()));
 		}
+		entity.setRemoteVersion(domainObject.getRemoteVersion());
+		entity.setStartDate(domainObject.getStartDate());
+		entity.setSeverity(domainObject.getSeverity());
+		entity.setType(domainObject.getType());
+		entity.setHeadline(domainObject.getHeadline());
+		entity.setMessage(domainObject.getMessage());
+		entity.setProvider(domainObject.getProvider());
+		entity.setMsgType(domainObject.getMsgType());
+		entity.setSentDate(domainObject.getSentDate());
 		return entity;
 	}
 }

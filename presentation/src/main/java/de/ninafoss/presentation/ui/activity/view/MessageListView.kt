@@ -8,5 +8,6 @@ interface MessageListView : View {
 	fun hideEmptyMessagesHint()
 	fun renderMessages(messages: List<Message>)
 	fun showMessagetSettingsDialog(message: Message)
+	fun showCreateLocationView()
 
 }

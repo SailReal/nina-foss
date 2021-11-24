@@ -10,6 +10,7 @@ import de.ninafoss.presentation.R
 import de.ninafoss.presentation.presenter.MessageListPresenter
 import de.ninafoss.presentation.ui.adapter.MessagesAdapter
 import kotlinx.android.synthetic.main.fragment_message_list.coordinatorLayout
+import kotlinx.android.synthetic.main.fragment_message_list.floating_action_button
 import kotlinx.android.synthetic.main.recycler_view_layout.recyclerView
 
 @Fragment(R.layout.fragment_message_list)
@@ -33,6 +34,7 @@ class MessageListFragment : BaseFragment() {
 
 	override fun setupView() {
 		setupRecyclerView()
+		floating_action_button.setOnClickListener { messageListPresenter.onAddLocationClicked() }
 	}
 
 	override fun onResume() {

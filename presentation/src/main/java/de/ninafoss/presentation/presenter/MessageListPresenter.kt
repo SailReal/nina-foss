@@ -110,6 +110,10 @@ class MessageListPresenter @Inject constructor( //
 		TODO("Not yet implemented")
 	}
 
+	fun onAddLocationClicked() {
+		view?.showCreateLocationView()
+	}
+
 	init {
 		unsubscribeOnDestroy(
 			getMessageListUseCase

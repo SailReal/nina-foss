@@ -57,13 +57,18 @@
 	<!-- ## screen: webdav settings -->
 	<string name="screen_webdav_settings_title" translatable="false">Foo bar</string>
 	<string name="screen_webdav_settings_url_port_label">URL</string>
-	<string name="screen_webdav_settings_username_label">Username</string>
 	<string name="screen_webdav_settings_password_label">Password</string>
 	<string name="screen_webdav_settings_done_button_text">Connect</string>
 	<string name="screen_webdav_settings_msg_url_must_not_be_empty">URL can\'t be empty.</string>
 	<string name="screen_webdav_settings_msg_url_is_invalid">URL is invalid.</string>
 	<string name="screen_webdav_settings_msg_username_must_not_be_empty">Username can\'t be empty.</string>
 	<string name="screen_webdav_settings_msg_password_must_not_be_empty">Password can\'t be empty.</string>
+
+	<!-- ## screen: create location -->
+	<string name="screen_create_location_title">Location</string>
+	<string name="screen_create_location_name_label">Location name</string>
+	<string name="screen_enter_location_name_msg_name_empty">Location name can\'t be empty.</string>
+	<string name="screen_enter_location_name_not_matching_code">No code that matches this location</string>
 
 	<!-- ## screen: enter message name -->
 	<string name="screen_enter_vault_name_title" translatable="false">@string/screen_vault_list_action_create_new_vault</string>

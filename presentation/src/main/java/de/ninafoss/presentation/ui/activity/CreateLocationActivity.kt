@@ -21,10 +21,11 @@ class CreateLocationActivity : BaseActivity(), CreateLocationView {
 	lateinit var createLocationIntent: CreateLocationIntent
 
 	override fun setupView() {
+		toolbar.setTitle(R.string.screen_create_location_title)
 		setSupportActionBar(toolbar)
 	}
 
-	override fun createFragment(): Fragment = CreateLocationFragment.newInstance(/*createLocationIntent*/)
+	override fun createFragment(): Fragment = CreateLocationFragment.newInstance(createLocationIntent.location())
 
 	private fun createLocationFragment(): CreateLocationFragment = getCurrentFragment(R.id.fragmentContainer) as CreateLocationFragment
 

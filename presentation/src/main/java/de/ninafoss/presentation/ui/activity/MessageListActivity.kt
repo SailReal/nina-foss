@@ -7,6 +7,7 @@ import javax.inject.Inject
 import de.ninafoss.domain.Message
 import de.ninafoss.generator.Activity
 import de.ninafoss.presentation.R
+import de.ninafoss.presentation.intent.Intents.createLocationIntent
 import de.ninafoss.presentation.intent.Intents.settingsIntent
 import de.ninafoss.presentation.model.ProgressModel
 import de.ninafoss.presentation.presenter.MessageListPresenter
@@ -121,5 +122,9 @@ class MessageListActivity : BaseActivity(), //
 
 	override fun showMessagetSettingsDialog(message: Message) {
 		TODO("Not yet implemented")
+	}
+
+	override fun showCreateLocationView() {
+		messageListPresenter.startIntent(createLocationIntent())
 	}
 }

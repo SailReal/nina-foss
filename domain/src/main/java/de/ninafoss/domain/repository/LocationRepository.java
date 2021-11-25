@@ -1,6 +1,7 @@
 package de.ninafoss.domain.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import de.ninafoss.domain.Location;
 import de.ninafoss.domain.exception.BackendException;
@@ -13,6 +14,6 @@ public interface LocationRepository {
 
 	void delete(Location location) throws BackendException;
 
-	void create(String code) throws BackendException;
+	Map<String, String> allPossibleLocations() throws BackendException;
 
 }

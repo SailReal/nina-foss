@@ -5,6 +5,7 @@ import de.ninafoss.domain.Location
 import de.ninafoss.domain.di.PerView
 import de.ninafoss.domain.usecases.NoOpResultHandler
 import de.ninafoss.domain.usecases.location.AddOrChangeLocationUseCase
+import de.ninafoss.domain.usecases.location.ListAllPossibleLocationUseCase
 import de.ninafoss.presentation.R
 import de.ninafoss.presentation.exception.ExceptionHandlers
 import de.ninafoss.presentation.ui.activity.view.CreateLocationView
@@ -13,54 +14,44 @@ import timber.log.Timber
 @PerView
 class CreateLocationPresenter @Inject constructor(
 	private val addOrChangeLocationUseCase: AddOrChangeLocationUseCase,
+	private val listAllPossibleLocationUseCase: ListAllPossibleLocationUseCase,
 	exceptionMappings: ExceptionHandlers
 ) : Presenter<CreateLocationView>(exceptionMappings) {
 
 	fun checkUserInput(locationName: String, location: Location?) {
-		// just for testing and until location parsing is implemented
-		when (locationName) {
-			"Königsfeld" -> {
-				createLocation(locationName, location)
+		listAllPossibleLocationUseCase.run(object : NoOpResultHandler<Map<String, String>>() {
+			override fun onSuccess(locations: Map<String, String>) {
+				locations.keys.find { key -> key.startsWith(locationName, true) }?.let {
+					createLocation(locationName, locations[it]!!, location)
+				} ?: view?.showError(R.string.screen_enter_location_name_not_matching_code)
 			}
-			"Heidelberg" -> {
-				createLocation(locationName, location)
+
+			override fun onError(e: Throwable) {
+				showError(e)
 			}
-			else -> {
-				view?.showError(R.string.screen_enter_location_name_not_matching_code)
-			}
-		}
+		})
 	}
 
-	private fun createLocation(locationName: String, location: Location?) {
-		when {
-			locationName.isEmpty() -> {
-				view?.showMessage(R.string.screen_enter_location_name_msg_name_empty)
+	private fun createLocation(locationName: String, code: String, location: Location?) {
+		val newLocation = location?.let { Location.aCopyOf(it).withName(locationName).withCode(code).build() }
+			?: Location.aLocation().withName(locationName).withCode(code).build()
+
+		addOrChangeLocationUseCase.withLocation(newLocation).run(object : NoOpResultHandler<Void?>() {
+			override fun onSuccess(void: Void?) {
+				Timber.tag("CreateLocationPresenter").i("Location added or updated")
+				finishWithResult(newLocation)
 			}
-			else -> {
-				val newLocation = location?.let { Location.aCopyOf(it).withName(locationName).withCode(getCodeFromName(locationName)).build() }
-					?: Location.aLocation().withName(locationName).withCode(getCodeFromName(locationName)).build()
 
-				addOrChangeLocationUseCase.withLocation(newLocation).run(object : NoOpResultHandler<Void?>() {
-					override fun onSuccess(void: Void?) {
-						Timber.tag("CreateLocationPresenter").i("Location added or updated")
-						finishWithResult(newLocation)
-					}
-
-					override fun onError(e: Throwable) {
-						showError(e)
-					}
-				})
+			override fun onError(e: Throwable) {
+				showError(e)
 			}
-		}
-	}
-
-	private fun getCodeFromName(locationName: String): String? {
-		return "083260000000"
+		})
 	}
 
 	init {
 		unsubscribeOnDestroy(
-			addOrChangeLocationUseCase
+			addOrChangeLocationUseCase,
+			listAllPossibleLocationUseCase
 		)
 	}
 }

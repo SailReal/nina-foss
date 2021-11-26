@@ -18,13 +18,15 @@ public class MessageEntity extends DatabaseEntity {
 	@ToOne(joinProperty = "locationId")
 	private LocationEntity locationEntity;
 
-	private String remoteVersion;
+	private String remoteId;
 
-	private String startDate;
+	private Integer remoteVersion;
+
+	private String instruction;
 
 	private String severity;
 
-	private String type;
+	private String contact;
 
 	private String headline;
 
@@ -44,15 +46,16 @@ public class MessageEntity extends DatabaseEntity {
 	@Generated(hash = 499759967)
 	private transient MessageEntityDao myDao;
 
-	@Generated(hash = 1775206661)
-	public MessageEntity(Long id, Long locationId, String remoteVersion, String startDate, String severity, String type, String headline, String message,
-			String provider, String msgType, String sentDate) {
+	@Generated(hash = 922324642)
+	public MessageEntity(Long id, Long locationId, String remoteId, Integer remoteVersion, String instruction, String severity, String contact, String headline,
+			String message, String provider, String msgType, String sentDate) {
 		this.id = id;
 		this.locationId = locationId;
+		this.remoteId = remoteId;
 		this.remoteVersion = remoteVersion;
-		this.startDate = startDate;
+		this.instruction = instruction;
 		this.severity = severity;
-		this.type = type;
+		this.contact = contact;
 		this.headline = headline;
 		this.message = message;
 		this.provider = provider;
@@ -165,20 +168,28 @@ public class MessageEntity extends DatabaseEntity {
 		myDao.update(this);
 	}
 
-	public String getRemoteVersion() {
+	public String getRemoteId() {
+		return remoteId;
+	}
+
+	public void setRemoteId(String remoteId) {
+		this.remoteId = remoteId;
+	}
+
+	public Integer getRemoteVersion() {
 		return this.remoteVersion;
 	}
 
-	public void setRemoteVersion(String remoteVersion) {
+	public void setRemoteVersion(Integer remoteVersion) {
 		this.remoteVersion = remoteVersion;
 	}
 
-	public String getStartDate() {
-		return this.startDate;
+	public String getInstruction() {
+		return this.instruction;
 	}
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setInstruction(String instruction) {
+		this.instruction = instruction;
 	}
 
 	public String getSeverity() {
@@ -189,12 +200,12 @@ public class MessageEntity extends DatabaseEntity {
 		this.severity = severity;
 	}
 
-	public String getType() {
-		return this.type;
+	public String getContact() {
+		return this.contact;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setContact(String contact) {
+		this.contact = contact;
 	}
 
 	public String getHeadline() {

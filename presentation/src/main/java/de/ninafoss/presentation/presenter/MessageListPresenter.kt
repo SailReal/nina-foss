@@ -5,8 +5,10 @@ import javax.inject.Inject
 import de.ninafoss.data.util.NetworkConnectionCheck
 import de.ninafoss.domain.Message
 import de.ninafoss.domain.di.PerView
+import de.ninafoss.domain.usecases.NoOpResultHandler
 import de.ninafoss.domain.usecases.UpdateCheck
 import de.ninafoss.domain.usecases.message.GetMessageListUseCase
+import de.ninafoss.domain.usecases.message.UpdateMessagesUseCase
 import de.ninafoss.presentation.exception.ExceptionHandlers
 import de.ninafoss.presentation.ui.activity.view.MessageListView
 import de.ninafoss.presentation.util.FileUtil
@@ -16,6 +18,7 @@ import timber.log.Timber
 @PerView
 class MessageListPresenter @Inject constructor( //
 	private val getMessageListUseCase: GetMessageListUseCase,
+	private val updateMessagesUseCase: UpdateMessagesUseCase,
 	//private val deleteVaultUseCase: DeleteVaultUseCase,
 	/*private val updateCheckUseCase: DoUpdateCheckUseCase,  //
 	private val updateUseCase: DoUpdateUseCase,  *///
@@ -71,6 +74,15 @@ class MessageListPresenter @Inject constructor( //
 	}
 
 	fun loadMessageList() {
+		updateMessagesUseCase.run(object : NoOpResultHandler<List<Message>>() {
+			override fun onSuccess(updatedMessage: List<Message>) {
+				Timber.tag("MessageListPresenter").i("Messages updated")
+			}
+
+			override fun onError(e: Throwable) {
+				showError(e)
+			}
+		})
 		messageList
 	}
 
@@ -116,7 +128,7 @@ class MessageListPresenter @Inject constructor( //
 
 	init {
 		unsubscribeOnDestroy(
-			getMessageListUseCase
+			getMessageListUseCase, updateMessagesUseCase
 		)
 	}
 }

@@ -24,15 +24,17 @@ public class MessageEntityMapper extends EntityMapper<MessageEntity, Message> {
 	public Message fromEntity(MessageEntity entity) throws BackendException {
 		return aMessage() //
 				.withId(entity.getId()) //
+				.withRemoteId(entity.getRemoteId()) //
+				.withRemoveVersion(entity.getRemoteVersion()) //
 				.withLocation(locationFrom(entity)) //
 				.withRemoveVersion(entity.getRemoteVersion()) //
-				.withStartDate(entity.getStartDate()) //
+				.withInstruction(entity.getInstruction()) //
 				.withSeverity(entity.getSeverity()) //
-				.withType(entity.getType()) //
+				.withContact(entity.getContact()) //
 				.withHeadline(entity.getHeadline()) //
 				.withMessage(entity.getMessage()) //
 				.withProvider(entity.getProvider()) //
-				.withType(entity.getType()) //
+				.withContact(entity.getContact()) //
 				.withSentDate(entity.getSentDate()) //
 				.build();
 	}
@@ -47,14 +49,15 @@ public class MessageEntityMapper extends EntityMapper<MessageEntity, Message> {
 	@Override
 	public MessageEntity toEntity(de.ninafoss.domain.Message domainObject) {
 		MessageEntity entity = new MessageEntity();
-		entity.setId(domainObject.getId());;
+		entity.setId(domainObject.getId());
+		entity.setRemoteId(domainObject.getRemoteId());
 		if (domainObject.getLocation() != null) {
 			entity.setLocation(locationEntityMapper.toEntity(domainObject.getLocation()));
 		}
 		entity.setRemoteVersion(domainObject.getRemoteVersion());
-		entity.setStartDate(domainObject.getStartDate());
+		entity.setInstruction(domainObject.getInstruction());
 		entity.setSeverity(domainObject.getSeverity());
-		entity.setType(domainObject.getType());
+		entity.setContact(domainObject.getContact());
 		entity.setHeadline(domainObject.getHeadline());
 		entity.setMessage(domainObject.getMessage());
 		entity.setProvider(domainObject.getProvider());

@@ -38,6 +38,8 @@ ext {
 
 	velocityVersion = '2.3'
 
+	jacksonDataBindVersion = '2.11.3'
+
 	timberVersion = '5.0.1'
 
 	lruFileCacheVersion = '1.2'
@@ -95,6 +97,7 @@ ext {
 			greenDao              : "org.greenrobot:greendao:${greenDaoVersion}",
 			gson                  : "com.google.code.gson:gson:${gsonVersion}",
 			hamcrest              : "org.hamcrest:hamcrest-all:${hamcrestVersion}",
+			jacksonDataBind       : "com.fasterxml.jackson.core:jackson-databind:${jacksonDataBindVersion}",
 			javaxAnnotation       : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
 			junit                 : "org.junit.jupiter:junit-jupiter:${jUnitVersion}",
 			junitApi              : "org.junit.jupiter:junit-jupiter-api:${jUnitVersion}",

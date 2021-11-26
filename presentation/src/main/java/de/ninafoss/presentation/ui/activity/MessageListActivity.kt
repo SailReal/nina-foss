@@ -113,11 +113,10 @@ class MessageListActivity : BaseActivity(), //
 	}
 
 	override fun hideEmptyMessagesHint() {
-		TODO("Not yet implemented")
 	}
 
 	override fun renderMessages(messages: List<Message>) {
-		TODO("Not yet implemented")
+		messageListFragment().showMessages(messages)
 	}
 
 	override fun showMessagetSettingsDialog(message: Message) {

@@ -33,8 +33,9 @@ class CreateLocationPresenter @Inject constructor(
 	}
 
 	private fun createLocation(locationName: String, code: String, location: Location?) {
-		val newLocation = location?.let { Location.aCopyOf(it).withName(locationName).withCode(code).build() }
-			?: Location.aLocation().withName(locationName).withCode(code).build()
+		val countryCode = code.dropLast(7) + "0000000"
+		val newLocation = location?.let { Location.aCopyOf(it).withName(locationName).withCode(countryCode).build() }
+			?: Location.aLocation().withName(locationName).withCode(countryCode).build()
 
 		addOrChangeLocationUseCase.withLocation(newLocation).run(object : NoOpResultHandler<Void?>() {
 			override fun onSuccess(void: Void?) {

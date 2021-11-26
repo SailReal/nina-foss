@@ -15,4 +15,6 @@ public interface MessageRepository {
 
 	Message load(Long id) throws BackendException;
 
+	List<Message> updateMessagesForAllLocations() throws BackendException;
+
 }

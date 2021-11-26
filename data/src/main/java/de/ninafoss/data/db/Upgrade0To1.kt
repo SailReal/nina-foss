@@ -31,10 +31,11 @@ internal class Upgrade0To1 @Inject constructor() : DatabaseUpgrade(0, 1) {
 		Sql.createTable("MESSAGE_ENTITY") //
 			.id() //
 			.optionalInt("LOCATION_ID") //
-			.requiredText("REMOTE_VERSION") //
-			.requiredText("START_DATE") //
+			.requiredText("REMOTE_ID") //
+			.requiredInt("REMOTE_VERSION") //
+			.optionalText("INSTRUCTION") //
 			.requiredText("SEVERITY") //
-			.requiredText("TYPE") //
+			.optionalText("CONTACT") //
 			.requiredText("HEADLINE") //
 			.requiredText("MESSAGE") //
 			.requiredText("PROVIDER") //

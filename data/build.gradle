@@ -94,6 +94,8 @@ dependencies {
 
 	implementation dependencies.lruFileCache
 
+	implementation dependencies.jacksonDataBind
+
 	api dependencies.jsonWebTokenApi
 	implementation dependencies.jsonWebTokenImpl
 	implementation dependencies.jsonWebTokenJson

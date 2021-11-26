@@ -6,10 +6,11 @@ public class Message implements Serializable {
 
 	private static final Long NOT_SET = Long.MIN_VALUE;
 	private final Long id;
-	private final String remoteVersion;
-	private final String startDate;
+	private final String remoteId;
+	private final Integer remoteVersion;
+	private final String instruction;
 	private final String severity;
-	private final String type;
+	private final String contact;
 	private final String headline;
 	private final String message;
 	private final String provider;
@@ -21,10 +22,11 @@ public class Message implements Serializable {
 		this.id = builder.id;
 		this.message = builder.message;
 		this.location = builder.location;
+		this.remoteId = builder.remoteId;
 		this.remoteVersion = builder.remoteVersion;
-		this.startDate = builder.startDate;
+		this.instruction = builder.instruction;
 		this.severity = builder.severity;
-		this.type = builder.type;
+		this.contact = builder.contact;
 		this.headline = builder.headline;
 		this.provider = builder.provider;
 		this.msgType = builder.msgType;
@@ -41,17 +43,21 @@ public class Message implements Serializable {
 				.withLocation(message.getLocation()) //
 				.withMessage(message.getMessage()) //
 				.withRemoveVersion(message.getRemoteVersion()) //
-				.withStartDate(message.getStartDate()) //
+				.withInstruction(message.getInstruction()) //
 				.withSeverity(message.getSeverity()) //
-				.withType(message.getType()) //
+				.withContact(message.getContact()) //
 				.withHeadline(message.getHeadline()) //
 				.withProvider(message.getProvider()) //
-				.withMessageType(message.getType()) //
+				.withMessageType(message.getContact()) //
 				.withSentDate(message.getSentDate());
 	}
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getRemoteId() {
+		return remoteId;
 	}
 
 	public String getMessage() {
@@ -62,11 +68,11 @@ public class Message implements Serializable {
 		return location;
 	}
 
-	public String getStartDate() {
-		return startDate;
+	public String getInstruction() {
+		return instruction;
 	}
 
-	public String getRemoteVersion() {
+	public Integer getRemoteVersion() {
 		return remoteVersion;
 	}
 
@@ -74,8 +80,8 @@ public class Message implements Serializable {
 		return severity;
 	}
 
-	public String getType() {
-		return type;
+	public String getContact() {
+		return contact;
 	}
 
 	public String getHeadline() {
@@ -117,10 +123,11 @@ public class Message implements Serializable {
 	public static class Builder {
 
 		private Long id = NOT_SET;
-		private String remoteVersion;
-		private String startDate;
+		private String remoteId;
+		private Integer remoteVersion;
+		private String instruction;
 		private String severity;
-		private String type;
+		private String contact;
 		private String headline;
 		private String message;
 		private String provider;
@@ -144,13 +151,19 @@ public class Message implements Serializable {
 			return this;
 		}
 
-		public Builder withRemoveVersion(String remoteVersion) {
+
+		public Builder withRemoteId(String remoteId) {
+			this.remoteId = remoteId;
+			return this;
+		}
+
+		public Builder withRemoveVersion(Integer remoteVersion) {
 			this.remoteVersion = remoteVersion;
 			return this;
 		}
 
-		public Builder withStartDate(String startDate) {
-			this.startDate = startDate;
+		public Builder withInstruction(String instruction) {
+			this.instruction = instruction;
 			return this;
 		}
 
@@ -159,8 +172,8 @@ public class Message implements Serializable {
 			return this;
 		}
 
-		public Builder withType(String type) {
-			this.type = type;
+		public Builder withContact(String contact) {
+			this.contact = contact;
 			return this;
 		}
 

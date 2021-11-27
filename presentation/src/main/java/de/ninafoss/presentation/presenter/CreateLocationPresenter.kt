@@ -1,13 +1,16 @@
 package de.ninafoss.presentation.presenter
 
+import android.widget.Toast
 import javax.inject.Inject
 import de.ninafoss.domain.Location
+import de.ninafoss.domain.Message
 import de.ninafoss.domain.di.PerView
 import de.ninafoss.domain.usecases.NoOpResultHandler
 import de.ninafoss.domain.usecases.location.AddOrChangeLocationUseCase
 import de.ninafoss.domain.usecases.location.DeleteLocationUseCase
 import de.ninafoss.domain.usecases.location.GetAllLocationsUseCase
 import de.ninafoss.domain.usecases.location.ListAllPossibleLocationUseCase
+import de.ninafoss.domain.usecases.message.UpdateMessagesUseCase
 import de.ninafoss.presentation.R
 import de.ninafoss.presentation.exception.ExceptionHandlers
 import de.ninafoss.presentation.ui.activity.view.CreateLocationView
@@ -19,6 +22,7 @@ class CreateLocationPresenter @Inject constructor(
 	private val getAllLocationsUseCase: GetAllLocationsUseCase,
 	private val listAllPossibleLocationUseCase: ListAllPossibleLocationUseCase,
 	private val deleteLocationUseCase: DeleteLocationUseCase,
+	private val updateMessagesUseCase: UpdateMessagesUseCase,
 	exceptionMappings: ExceptionHandlers
 ) : Presenter<CreateLocationView>(exceptionMappings) {
 
@@ -78,11 +82,20 @@ class CreateLocationPresenter @Inject constructor(
 		addOrChangeLocationUseCase.withLocation(newLocation).run(object : NoOpResultHandler<Void?>() {
 			override fun onSuccess(void: Void?) {
 				Timber.tag("CreateLocationPresenter").i("Location added or updated")
-				finishWithResult(newLocation)
+				Toast.makeText(context(), getString(R.string.notification_location_successfully_added_title), Toast.LENGTH_SHORT).show()
+				updateMessages()
 			}
 
 			override fun onError(e: Throwable) {
 				showError(e)
+			}
+		})
+	}
+
+	private fun updateMessages() {
+		updateMessagesUseCase.run(object: NoOpResultHandler<List<Message>>() {
+			override fun onFinished() {
+				finish()
 			}
 		})
 	}
@@ -121,7 +134,8 @@ class CreateLocationPresenter @Inject constructor(
 			addOrChangeLocationUseCase,
 			deleteLocationUseCase,
 			getAllLocationsUseCase,
-			listAllPossibleLocationUseCase
+			listAllPossibleLocationUseCase,
+			updateMessagesUseCase
 		)
 	}
 }

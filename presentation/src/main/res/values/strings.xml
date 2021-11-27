@@ -370,6 +370,8 @@
 	<!-- notification -->
 	<string name="notification_message_received_title">Message received</string>
 
+	<string name="notification_location_successfully_added_title">Location successfully added</string>
+
 	<string name="notification_app_running_title">NINA FOSS is running</string>
 
 	<string name="notification_unlocked">Vaults unlocked: %1$d</string>

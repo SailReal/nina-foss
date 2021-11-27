@@ -12,6 +12,7 @@ class EmailBuilder private constructor() {
 	private var subject: String? = null
 	private var body: String? = null
 	private val attachments: MutableList<File> = ArrayList()
+
 	fun to(recipient: String?): EmailBuilder {
 		this.recipient = recipient
 		return this

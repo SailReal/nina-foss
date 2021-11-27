@@ -48,7 +48,7 @@ class SettingsPresenter @Inject internal constructor(
 
 	private fun sendErrorReport(attachment: File) {
 		EmailBuilder.anEmail() //
-			.to("support@cryptomator.org") //
+				.to("support@nina-foss.de") //
 			.withSubject(context().getString(R.string.error_report_subject)) //
 			.withBody(errorReportEmailBody()) //
 			.attach(attachment) //

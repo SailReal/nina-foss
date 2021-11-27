@@ -109,9 +109,7 @@
 	<string name="screen_settings_glob_search">Search using glob pattern</string>
 	<string name="screen_settings_glob_search_summary">Use glob pattern matching like alice.*.jpg</string>
 
-	<string name="screen_settings_section_auto_lock">Automatic locking</string>
-	<string name="screen_settings_auto_lock_timeout">Lock after</string>
-	<string name="screen_settings_auto_lock_on_screen_lock">When screen is disabled</string>
+	<string name="screen_settings_auto_lock_timeout">Refresh after</string>
 
 	<string name="screen_settings_section_auto_photo_upload">Automatic photo upload</string>
 	<string name="screen_settings_section_auto_photo_upload_vault">Choose message for upload</string>
@@ -368,6 +366,10 @@
 	<string name="time_unit_years_pl">years</string>
 
 	<!-- notification -->
+	<string name="notification_message_received_title">Message received</string>
+
+	<string name="notification_app_running_title">NINA FOSS is running</string>
+
 	<string name="notification_unlocked">Vaults unlocked: %1$d</string>
 	<string name="notification_timeout">Autolock in %1$s</string>
 	<string name="notification_lock_all">Lock all</string>
@@ -402,11 +404,10 @@
 	<string name="screen_file_browser_file_info_label_date">modified %1$s ago</string>
 
 	<!-- lock timeout names -->
-	<string name="lock_timeout_instant">Instant</string>
-	<string name="lock_timeout_1m">1 minute</string>
-	<string name="lock_timeout_2m">2 minutes</string>
-	<string name="lock_timeout_5m">5 minutes</string>
-	<string name="lock_timeout_10m">10 minutes</string>
+	<string name="polling_timeout_fifteen_minutes">15 minutes</string>
+	<string name="polling_timeout_one_hour">1 hour</string>
+	<string name="polling_timeout_six_hours">6 hours</string>
+
 	<string name="lock_timeout_never">Never</string>
 
 	<!-- screen scheme mode names -->

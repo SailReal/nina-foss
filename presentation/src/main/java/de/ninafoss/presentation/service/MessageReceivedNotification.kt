@@ -3,25 +3,20 @@ package de.ninafoss.presentation.service
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
-import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_CANCEL_CURRENT
 import android.content.Context
-import android.content.Intent
-import android.content.Intent.ACTION_MAIN
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.core.app.NotificationCompat
+import de.ninafoss.domain.Message
 import de.ninafoss.presentation.R
-import de.ninafoss.presentation.ui.activity.MessageListActivity
 import de.ninafoss.presentation.util.ResourceHelper.Companion.getColor
+import kotlin.random.Random
 
-class AppRunningNotification(private val context: Context) {
+class MessageReceivedNotification(private val context: Context) {
 
 	private val builder: NotificationCompat.Builder
-	private var notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+	private var notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+	private val notificationId = Random.nextInt()
 
 	init {
-
 		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 			val notificationChannel = NotificationChannel( //
 				NOTIFICATION_CHANNEL_ID, //
@@ -32,36 +27,28 @@ class AppRunningNotification(private val context: Context) {
 		}
 
 		this.builder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID) //
-			.setContentTitle(context.getString(R.string.notification_app_running_title)) //
+			.setContentTitle(context.getString(R.string.notification_message_received_title)) //
 			.setSmallIcon(R.drawable.background_splash_cryptomator) //
 			.setColor(getColor(R.color.colorPrimary)) //
 			.setGroup(NOTIFICATION_GROUP_KEY)
-			.setOngoing(true)
+			.setOngoing(false)
 	}
 
-	/*private fun showErrorWithMessage(message: String) {
-		builder.setContentIntent(startTheActivity())
-		builder //
-			.setContentTitle(context.getString(R.string.notification_auto_upload_failed_title))
-			.setContentText(message) //
-			.setProgress(0, 0, false)
-			.setAutoCancel(true)
-			.setOngoing(false)
-			.mActions.clear()
+	fun show(message: Message) {
+		builder.setContentText(message.headline)
 		show()
-	}*/
+	}
 
 	fun show() {
-		notificationManager.notify(NOTIFICATION_ID, builder.build())
+		notificationManager.notify(notificationId, builder.build())
 	}
 
 	fun hide() {
-		notificationManager.cancel(NOTIFICATION_ID)
+		notificationManager.cancel(notificationId)
 	}
 
 	companion object {
 
-		private const val NOTIFICATION_ID = 94874
 		private const val NOTIFICATION_CHANNEL_ID = "65478"
 		private const val NOTIFICATION_CHANNEL_NAME = "NINA"
 		private const val NOTIFICATION_GROUP_KEY = "NINAGroup"

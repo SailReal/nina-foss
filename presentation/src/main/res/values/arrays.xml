@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array name="screen_settings_auto_lock_entries">
-		<item>@string/lock_timeout_instant</item>
-		<item>@string/lock_timeout_1m</item>
-		<item>@string/lock_timeout_2m</item>
-		<item>@string/lock_timeout_5m</item>
-		<item>@string/lock_timeout_10m</item>
-		<item>@string/lock_timeout_never</item>
+	<string-array name="screen_settings_polling_entries">
+		<item>@string/polling_timeout_fifteen_minutes</item>
+		<item>@string/polling_timeout_one_hour</item>
+		<item>@string/polling_timeout_six_hours</item>
 	</string-array>
-	<string-array name="screen_settings_auto_lock_values">
-		<item>INSTANT</item>
-		<item>ONE_MINUTE</item>
-		<item>TWO_MINUTES</item>
-		<item>FIVE_MINUTES</item>
-		<item>TEN_MINUTES</item>
-		<item>NEVER</item>
+	<string-array name="screen_settings_polling_values">
+		<item>FIFTEEN_MINUTES</item>
+		<item>ONE_HOUR</item>
+		<item>SIX_HOURS</item>
 	</string-array>
 	<string-array name="screen_settings_style_mode_entries">
 		<item>@string/follow_system</item>

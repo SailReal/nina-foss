@@ -5,7 +5,6 @@ import javax.inject.Inject
 import de.ninafoss.data.util.NetworkConnectionCheck
 import de.ninafoss.domain.Message
 import de.ninafoss.domain.di.PerView
-import de.ninafoss.domain.usecases.NoOpResultHandler
 import de.ninafoss.domain.usecases.UpdateCheck
 import de.ninafoss.domain.usecases.message.GetMessageListUseCase
 import de.ninafoss.domain.usecases.message.UpdateMessagesUseCase
@@ -74,15 +73,6 @@ class MessageListPresenter @Inject constructor( //
 	}
 
 	fun loadMessageList() {
-		updateMessagesUseCase.run(object : NoOpResultHandler<List<Message>>() {
-			override fun onSuccess(updatedMessage: List<Message>) {
-				Timber.tag("MessageListPresenter").i("Messages updated")
-			}
-
-			override fun onError(e: Throwable) {
-				showError(e)
-			}
-		})
 		messageList
 	}
 

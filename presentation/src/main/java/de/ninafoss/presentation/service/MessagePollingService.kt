@@ -4,68 +4,57 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
-import de.ninafoss.domain.Location
+import java.util.Timer
+import java.util.TimerTask
+import de.ninafoss.domain.repository.MessageRepository
 import de.ninafoss.util.SharedPreferencesHandler
 import timber.log.Timber
 
 class MessagePollingService : Service() {
 
-	private var notification: AppRunningNotification? = null
+	private val timer = Timer()
+
+	private var runningNotification: AppRunningNotification? = null
+	private var timerTask: TimerTask? = null
+
 	private lateinit var context: Context
-	private var worker: Thread? = null
+	private lateinit var messageRepository: MessageRepository
 
-	private fun startBackgroundCheck(location: List<Location>) {
-		Timber.tag("AutoUploadService").i("Starting background upload")
+	private fun startPolling() {
+		Timber.tag("MessagePollingService").i("Starting background polling")
 
-		val autoUploadFolderPath = SharedPreferencesHandler(context).photoUploadVaultFolder()
-
-		worker = Thread {
-			// FIXME
+		timerTask = object : TimerTask() {
+			override fun run() {
+				Timber.tag("MessagePollingService").i("Running update messages")
+				messageRepository.updateMessagesForAllLocations().forEach {
+					MessageReceivedNotification(context).show(it)
+				}
+			}
 		}
-		worker?.start()
+
+		timer.schedule(timerTask, 0, SharedPreferencesHandler(context).pollingInterval.durationMillis)
 	}
 
 	override fun onCreate() {
 		super.onCreate()
-		Timber.tag("AutoUploadService").d("created")
-		notification = AppRunningNotification(this, 0)
+		Timber.tag("MessagePollingService").d("created")
+		runningNotification = AppRunningNotification(this)
 	}
 
 	override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-		Timber.tag("AutoUploadService").i("started")
-		if (isStartAutoUpload(intent)) {
-			Timber.tag("AutoUploadService").i("Received start upload")
-			//startBackgroundCheck(locations)
-		} else if (isCancelAutoUpload(intent)) {
-			Timber.tag("AutoUploadService").i("Received stop auto upload")
-			hideNotification()
-		} else if (isVaultNotFound(intent)) {
-			Timber.tag("AutoUploadService").i("Received show vault not found notification")
-			notification!!.showVaultNotFoundNotification()
-		}
+		Timber.tag("MessagePollingService").i("started")
 		return START_STICKY
 	}
 
-	private fun isStartAutoUpload(intent: Intent?): Boolean {
-		return (intent != null && ACTION_START_AUTO_UPLOAD == intent.action)
-	}
-
-	private fun isCancelAutoUpload(intent: Intent?): Boolean {
-		return (intent != null && ACTION_CANCEL_AUTO_UPLOAD == intent.action)
-	}
-
-	private fun isVaultNotFound(intent: Intent?): Boolean {
-		return (intent != null && ACTION_VAULT_NOT_FOUND == intent.action)
-	}
-
 	override fun onDestroy() {
-		Timber.tag("AutoUploadService").i("onDestroyed")
-		worker?.interrupt()
+		Timber.tag("MessagePollingService").i("onDestroyed")
+		timerTask?.cancel()
+		timer.cancel()
 		hideNotification()
 	}
 
 	override fun onTaskRemoved(rootIntent: Intent) {
-		Timber.tag("AutoUploadService").i("App killed by user")
+		Timber.tag("MessagePollingService").i("App killed by user")
 	}
 
 	override fun onBind(intent: Intent): IBinder {
@@ -73,42 +62,20 @@ class MessagePollingService : Service() {
 	}
 
 	private fun hideNotification() {
-		notification?.hide()
+		runningNotification?.hide()
 	}
 
 	inner class Binder internal constructor() : android.os.Binder() {
 
-		fun init(myContext: Context) {
+		fun init(myContext: Context, myMessageRepository: MessageRepository) {
 			context = myContext
+			messageRepository = myMessageRepository
+			runningNotification?.show()
+			startPolling()
 		}
 
 	}
 
 	companion object {
-
-		private const val ACTION_START_AUTO_UPLOAD = "START_AUTO_UPLOAD"
-		private const val ACTION_CANCEL_AUTO_UPLOAD = "CANCEL_AUTO_UPLOAD"
-		private const val ACTION_VAULT_NOT_FOUND = "VAULT_NOT_FOUND"
-
-		private var locations: List<Location>? = null
-
-		fun startService(context: Context, myLocation: List<Location>): Intent {
-			locations = myLocation
-			val startAutoUpload = Intent(context, MessagePollingService::class.java)
-			startAutoUpload.action = ACTION_START_AUTO_UPLOAD
-			return startAutoUpload
-		}
-
-		fun cancel(context: Context): Intent {
-			val cancelAutoUploadIntent = Intent(context, MessagePollingService::class.java)
-			cancelAutoUploadIntent.action = ACTION_CANCEL_AUTO_UPLOAD
-			return cancelAutoUploadIntent
-		}
-
-		fun messageReceived(context: Context): Intent {
-			val cancelAutoUploadIntent = Intent(context, MessagePollingService::class.java)
-			cancelAutoUploadIntent.action = ACTION_VAULT_NOT_FOUND
-			return cancelAutoUploadIntent
-		}
 	}
 }

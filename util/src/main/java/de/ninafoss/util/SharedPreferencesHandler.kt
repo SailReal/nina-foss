@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.preference.PreferenceManager
 import com.google.common.base.Optional
-import de.ninafoss.util.LockTimeout.ONE_MINUTE
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -21,16 +20,16 @@ constructor(context: Context) : SharedPreferences.OnSharedPreferenceChangeListen
 
 	private val defaultSharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-	private val lockTimeoutChangedListeners = WeakHashMap<Consumer<LockTimeout>, Void>()
+	private val lockTimeoutChangedListeners = WeakHashMap<Consumer<PollingInterval>, Void>()
 
 	init {
 		defaultSharedPreferences.registerOnSharedPreferenceChangeListener(this)
 	}
 
-	val lockTimeout: LockTimeout
+	val pollingInterval: PollingInterval
 		get() {
-			val value = defaultSharedPreferences.getValue(LOCK_TIMEOUT, ONE_MINUTE.name)
-			return LockTimeout.valueOf(value)
+			val value = defaultSharedPreferences.getValue(POLLING_INTERVAL, PollingInterval.FIFTEEN_MINUTES.name)
+			return PollingInterval.valueOf(value)
 		}
 
 	val screenStyleMode: Int
@@ -43,7 +42,6 @@ constructor(context: Context) : SharedPreferences.OnSharedPreferenceChangeListen
 			}
 		}
 
-
 	fun setScreenStyleMode(newValue: String) {
 		defaultSharedPreferences.setValue(SCREEN_STYLE_MODE, newValue)
 	}
@@ -51,9 +49,9 @@ constructor(context: Context) : SharedPreferences.OnSharedPreferenceChangeListen
 	val isScreenLockDialogAlreadyShown: Boolean
 		get() = defaultSharedPreferences.contains(SCREEN_LOCK_DIALOG_SHOWN)
 
-	fun addLockTimeoutChangedListener(listener: Consumer<LockTimeout>) {
+	fun addPollingIntervalChangedListener(listener: Consumer<PollingInterval>) {
 		lockTimeoutChangedListeners[listener] = null
-		listener.accept(lockTimeout)
+		listener.accept(pollingInterval)
 	}
 
 	fun debugMode(): Boolean {
@@ -166,28 +164,19 @@ constructor(context: Context) : SharedPreferences.OnSharedPreferenceChangeListen
 	}
 
 	override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-		if (LOCK_TIMEOUT == key) {
-			val lockTimeout = lockTimeout
+		/*if (POLLING_INTERVAL == key) {
 			lockTimeoutChangedListeners.keys.forEach { listener ->
-				listener.accept(lockTimeout)
+				listener.accept(pollingInterval)
 			}
-		}
+		}*/
 	}
 
 	fun lruCacheSize(): Int {
 		return defaultSharedPreferences.getValue(LRU_CACHE_SIZE, "100").toInt() * 1024 * 1024
 	}
 
-	fun mail(): String {
-		return defaultSharedPreferences.getValue(MAIL, "")
-	}
-
 	fun setMail(mail: String) {
 		defaultSharedPreferences.setValue(MAIL, mail)
-	}
-
-	fun keepUnlockedWhileEditing(): Boolean {
-		return defaultSharedPreferences.getBoolean(KEEP_UNLOCKED_WHILE_EDITING, false)
 	}
 
 	private fun updateIntervalInDays(): Optional<Int> {
@@ -236,31 +225,6 @@ constructor(context: Context) : SharedPreferences.OnSharedPreferenceChangeListen
 		return defaultSharedPreferences.getBoolean(BACKGROUND_UNLOCK_PREPARATION, true)
 	}
 
-	fun vaultsRemovedDuringMigration(vaultsToBeRemoved: Pair<String, List<String>>?) {
-		vaultsToBeRemoved?.let {
-			val vaultsToBeRemovedString = if (it.second.isNotEmpty()) {
-				it.second.reduce { acc, s -> "$acc,$s" }
-			} else {
-				""
-			}
-			defaultSharedPreferences.setValue(VAULTS_REMOVED_DURING_MIGRATION_TYPE, it.first)
-			defaultSharedPreferences.setValue(VAULTS_REMOVED_DURING_MIGRATION, vaultsToBeRemovedString)
-		} ?: run {
-			defaultSharedPreferences.setValue(VAULTS_REMOVED_DURING_MIGRATION_TYPE, null)
-			defaultSharedPreferences.setValue(VAULTS_REMOVED_DURING_MIGRATION, null)
-		}
-	}
-
-	fun vaultsRemovedDuringMigration(): Pair<String, List<String>>? {
-		val vaultsRemovedDuringMigrationType = defaultSharedPreferences.getString(VAULTS_REMOVED_DURING_MIGRATION_TYPE, null)
-		val vaultsRemovedDuringMigration = defaultSharedPreferences.getString(VAULTS_REMOVED_DURING_MIGRATION, null)
-		return if(vaultsRemovedDuringMigrationType != null && vaultsRemovedDuringMigration != null) {
-			Pair(vaultsRemovedDuringMigrationType, ArrayList(vaultsRemovedDuringMigration.split(',')))
-		} else {
-			null
-		}
-	}
-
 	companion object {
 
 		private const val SCREEN_LOCK_DIALOG_SHOWN = "askForScreenLockDialogShown"
@@ -289,6 +253,7 @@ constructor(context: Context) : SharedPreferences.OnSharedPreferenceChangeListen
 		const val LRU_CACHE_SIZE = "lruCacheSize"
 		const val MAIL = "mail"
 		const val UPDATE_INTERVAL = "updateInterval"
+		const val POLLING_INTERVAL = "pollingInterval"
 		private const val LAST_UPDATE_CHECK = "lastUpdateCheck"
 	}
 

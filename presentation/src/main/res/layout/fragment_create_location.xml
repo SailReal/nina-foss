@@ -29,5 +29,18 @@
 		android:text="@string/screen_webdav_settings_done_button_text"
 		android:textStyle="bold" />
 
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/createLocationButton"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="25dp"
+		android:singleLine="true"
+		android:text="@string/screen_locations_title"
+		android:textColor="@color/colorPrimary"
+		android:textSize="16sp" />
+
+	<include layout="@layout/recycler_view_layout" />
+
 </LinearLayout>
 

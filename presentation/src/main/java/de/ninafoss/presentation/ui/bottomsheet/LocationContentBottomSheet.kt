@@ -1,54 +1,41 @@
 package de.ninafoss.presentation.ui.bottomsheet
 
+import android.os.Bundle
+import de.ninafoss.domain.Location
 import de.ninafoss.generator.BottomSheet
 import de.ninafoss.presentation.R
+import kotlinx.android.synthetic.main.dialog_bottom_sheet_location_action.deleteLocation
+import kotlinx.android.synthetic.main.dialog_bottom_sheet_location_action.title
 
-@BottomSheet(R.layout.dialog_bottom_sheet_message_action)
-class LocationContentActionBottomSheet : BaseBottomSheet<LocationContentActionBottomSheet.Callback>() {
+@BottomSheet(R.layout.dialog_bottom_sheet_location_action)
+class SettingsLocationBottomSheet : BaseBottomSheet<SettingsLocationBottomSheet.Callback>() {
 
 	interface Callback {
 
-		fun onCreateNewFolderClicked()
-		fun onCreateNewTextFileClicked()
+		fun onDeleteLocationClicked(location: Location)
+
 	}
 
 	override fun setupView() {
-		/*val folder = requireArguments().getSerializable(FOLDER_ARG) as CloudFolderModel
+		val location = requireArguments().getSerializable(LOCATION_ARG) as Location
 
-		title.text = String.format(getString(R.string.screen_file_browser_actions_title), folderPath(folder))
+		title.text = String.format(getString(R.string.screen_location_bottom_sheet_actions_title), location.name())
 
-		create_new_folder.setOnClickListener {
-			callback?.onCreateNewFolderClicked()
+		deleteLocation.setOnClickListener {
+			callback?.onDeleteLocationClicked(location)
 			dismiss()
 		}
-		upload_files.setOnClickListener {
-			callback?.onUploadFilesClicked(folder)
-			dismiss()
-		}
-		create_new_text_file.setOnClickListener {
-			callback?.onCreateNewTextFileClicked()
-			dismiss()
-		}*/
 	}
-
-	/*private fun folderPath(folder: CloudFolderModel): String {
-		val vault = folder.vault()
-		return if (vault == null) {
-			folder.path
-		} else {
-			vault.path + folder.path
-		}
-	}*/
 
 	companion object {
 
-		private const val FOLDER_ARG = "folder"
-		/*fun newInstance(folder: CloudFolderModel): VaultContentActionBottomSheet {
-			val dialog = VaultContentActionBottomSheet()
+		private const val LOCATION_ARG = "location"
+		fun newInstance(location: Location): SettingsLocationBottomSheet {
+			val dialog = SettingsLocationBottomSheet()
 			val args = Bundle()
-			args.putSerializable(FOLDER_ARG, folder)
+			args.putSerializable(LOCATION_ARG, location)
 			dialog.arguments = args
 			return dialog
-		}*/
+		}
 	}
 }

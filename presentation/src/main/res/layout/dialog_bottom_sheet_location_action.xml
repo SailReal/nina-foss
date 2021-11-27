@@ -25,22 +25,10 @@
 		<!-- using android:singleLine to fix https://code.google.com/p/android/issues/detail?id=33868 -->
 
 		<TextView
-			android:id="@+id/upload_files"
+			android:id="@+id/deleteLocation"
 			style="@style/AppTheme.ListItem"
 			android:text="Foo"
-			app:drawableStartCompat="@drawable/ic_file_upload_gray" />
-
-		<TextView
-			android:id="@+id/create_new_folder"
-			style="@style/AppTheme.ListItem"
-			android:text="Bar"
-			app:drawableStartCompat="@drawable/ic_folder" />
-
-		<TextView
-			android:id="@+id/create_new_text_file"
-			style="@style/AppTheme.ListItem"
-			android:text="Baz"
-			app:drawableStartCompat="@drawable/ic_file" />
+			app:drawableStartCompat="@drawable/ic_delete" />
 
 	</LinearLayout>
 </androidx.core.widget.NestedScrollView>

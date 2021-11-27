@@ -69,6 +69,8 @@
 	<string name="screen_create_location_name_label">Location name</string>
 	<string name="screen_enter_location_name_msg_name_empty">Location name can\'t be empty.</string>
 	<string name="screen_enter_location_name_not_matching_code">No code that matches this location</string>
+	<string name="screen_locations_title">Locations</string>
+
 
 	<!-- ## screen: enter message name -->
 	<string name="screen_enter_vault_name_title" translatable="false">@string/screen_vault_list_action_create_new_vault</string>
@@ -338,6 +340,8 @@
 	<string name="error_report_section_summary" translatable="false">Summary</string>
 	<string name="error_report_summary_description" translatable="false">Insert a detailed description of what you tried to do or mention your support ticket if you already created one.</string>
 	<string name="error_report_section_device" translatable="false">Device Info</string>
+
+	<string name="screen_location_bottom_sheet_actions_title">Edit %1$s</string>
 
 	<!-- # misc -->
 

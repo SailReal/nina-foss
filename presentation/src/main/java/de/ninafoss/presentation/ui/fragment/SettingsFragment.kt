@@ -104,11 +104,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 		(findPreference(SharedPreferencesHandler.DEBUG_MODE) as SwitchPreferenceCompat?)?.isChecked = false
 	}
 
-	fun secureScreen() {
-		sharedPreferencesHandler.setSecureScreen(true)
-		(findPreference(SharedPreferencesHandler.SECURE_SCREEN) as SwitchPreferenceCompat?)?.isChecked = true
-	}
-
 	private fun onSendErrorReportClicked() {
 		activity().presenter().onSendErrorReportClicked()
 	}

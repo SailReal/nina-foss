@@ -10,21 +10,13 @@ import com.google.common.base.Optional
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.util.WeakHashMap
-import java.util.function.Consumer
 import javax.inject.Inject
 import kotlin.math.abs
 
 class SharedPreferencesHandler @Inject
-constructor(context: Context) : SharedPreferences.OnSharedPreferenceChangeListener {
+constructor(context: Context) {
 
 	private val defaultSharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-
-	private val lockTimeoutChangedListeners = WeakHashMap<Consumer<PollingInterval>, Void>()
-
-	init {
-		defaultSharedPreferences.registerOnSharedPreferenceChangeListener(this)
-	}
 
 	val pollingInterval: PollingInterval
 		get() {
@@ -46,14 +38,6 @@ constructor(context: Context) : SharedPreferences.OnSharedPreferenceChangeListen
 		defaultSharedPreferences.setValue(SCREEN_STYLE_MODE, newValue)
 	}
 
-	val isScreenLockDialogAlreadyShown: Boolean
-		get() = defaultSharedPreferences.contains(SCREEN_LOCK_DIALOG_SHOWN)
-
-	fun addPollingIntervalChangedListener(listener: Consumer<PollingInterval>) {
-		lockTimeoutChangedListeners[listener] = null
-		listener.accept(pollingInterval)
-	}
-
 	fun debugMode(): Boolean {
 		return defaultSharedPreferences.getValue(DEBUG_MODE, false)
 	}
@@ -61,122 +45,6 @@ constructor(context: Context) : SharedPreferences.OnSharedPreferenceChangeListen
 	fun setDebugMode(enabled: Boolean) {
 		defaultSharedPreferences //
 			.setValue(DEBUG_MODE, enabled)
-	}
-
-	fun disableAppWhenObscured(): Boolean {
-		return defaultSharedPreferences.getValue(DISABLE_APP_WHEN_OBSCURED, true)
-	}
-
-	fun setDisableAppWhenObscured(enabled: Boolean) {
-		defaultSharedPreferences //
-			.setValue(DISABLE_APP_WHEN_OBSCURED, enabled)
-	}
-
-	fun secureScreen(): Boolean {
-		return defaultSharedPreferences.getValue(SECURE_SCREEN, true)
-	}
-
-	fun setSecureScreen(enabled: Boolean) {
-		defaultSharedPreferences //
-			.setValue(SECURE_SCREEN, enabled)
-	}
-
-	fun lockOnScreenOff(): Boolean {
-		return defaultSharedPreferences.getValue(LOCK_ON_SCREEN_OFF, true)
-	}
-
-	fun setScreenLockDialogAlreadyShown() {
-		defaultSharedPreferences //
-			.setValue(SCREEN_LOCK_DIALOG_SHOWN, true)
-	}
-
-	fun isBetaModeAlreadyShown(): Boolean {
-		return defaultSharedPreferences.getValue(SCREEN_BETA_DIALOG_SHOWN, true)
-	}
-
-	fun setBetaScreenDialogAlreadyShown(value: Boolean) {
-		defaultSharedPreferences //
-			.setValue(SCREEN_BETA_DIALOG_SHOWN, value)
-	}
-
-	fun useBiometricAuthentication(): Boolean {
-		return defaultSharedPreferences.getValue(USE_BIOMETRIC_AUTHENTICATION, false)
-	}
-
-	fun changeUseBiometricAuthentication(useBiometricAuthentication: Boolean) {
-		defaultSharedPreferences.setValue(USE_BIOMETRIC_AUTHENTICATION, useBiometricAuthentication)
-	}
-
-	fun useConfirmationInFaceUnlockBiometricAuthentication(): Boolean {
-		return defaultSharedPreferences.getValue(USE_CONFIRMATION_IN_FACE_UNLOCK_AUTHENTICATION, true)
-	}
-
-	fun changeUseConfirmationInFaceUnlockBiometricAuthentication(useConfirmationInFaceUnlockBiometricAuthentication: Boolean) {
-		defaultSharedPreferences.setValue(USE_CONFIRMATION_IN_FACE_UNLOCK_AUTHENTICATION, useConfirmationInFaceUnlockBiometricAuthentication)
-	}
-
-	fun useLiveSearch(): Boolean {
-		return defaultSharedPreferences.getValue(LIVE_SEARCH, false)
-	}
-
-	fun useGlobSearch(): Boolean {
-		return defaultSharedPreferences.getValue(GLOB_SEARCH, false)
-	}
-
-	fun removeAllEntries() {
-		defaultSharedPreferences.clear()
-	}
-
-	fun usePhotoUpload(): Boolean {
-		return defaultSharedPreferences.getValue(PHOTO_UPLOAD, false)
-	}
-
-	fun usePhotoUploadInstant(): Boolean {
-		return defaultSharedPreferences.getValue(PHOTO_UPLOAD_INSTANT, true)
-	}
-
-	fun autoPhotoUploadOnlyUsingWifi(): Boolean {
-		return defaultSharedPreferences.getValue(PHOTO_UPLOAD_ONLY_USING_WIFI)
-	}
-
-	fun photoUploadVault(): Long {
-		return defaultSharedPreferences.getValue(PHOTO_UPLOAD_VAULT, 0)
-	}
-
-	fun photoUploadVault(vaultId: Long) {
-		defaultSharedPreferences.setValue(PHOTO_UPLOAD_VAULT, vaultId)
-	}
-
-	fun photoUploadVaultFolder(): String {
-		return defaultSharedPreferences.getValue(PHOTO_UPLOAD_FOLDER, "")
-	}
-
-	fun photoUploadVaultFolder(location: String) {
-		defaultSharedPreferences.setValue(PHOTO_UPLOAD_FOLDER, location)
-	}
-
-	fun autoPhotoUploadIncludingVideos(): Boolean {
-		return defaultSharedPreferences.getValue(PHOTO_UPLOAD_INCLUDING_VIDEOS, false)
-	}
-
-	fun useLruCache(): Boolean {
-		return defaultSharedPreferences.getValue(USE_LRU_CACHE, false)
-	}
-
-	override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-		/*if (POLLING_INTERVAL == key) {
-			lockTimeoutChangedListeners.keys.forEach { listener ->
-				listener.accept(pollingInterval)
-			}
-		}*/
-	}
-
-	fun lruCacheSize(): Int {
-		return defaultSharedPreferences.getValue(LRU_CACHE_SIZE, "100").toInt() * 1024 * 1024
-	}
-
-	fun setMail(mail: String) {
-		defaultSharedPreferences.setValue(MAIL, mail)
 	}
 
 	private fun updateIntervalInDays(): Optional<Int> {
@@ -221,37 +89,11 @@ constructor(context: Context) : SharedPreferences.OnSharedPreferenceChangeListen
 		return different / daysInMilli >= updateIntervalInDays.get()
 	}
 
-	fun backgroundUnlockPreparation(): Boolean {
-		return defaultSharedPreferences.getBoolean(BACKGROUND_UNLOCK_PREPARATION, true)
-	}
-
 	companion object {
 
-		private const val SCREEN_LOCK_DIALOG_SHOWN = "askForScreenLockDialogShown"
-		private const val SCREEN_BETA_DIALOG_SHOWN = "askForBetaConfirmationDialogShown"
-		private const val USE_BIOMETRIC_AUTHENTICATION = "useFingerprint"
-		private const val USE_CONFIRMATION_IN_FACE_UNLOCK_AUTHENTICATION = "useConfirmationInFaceUnlockBiometricAuthentication"
-		private const val LOCK_TIMEOUT = "lockTimeout"
-		private const val LOCK_ON_SCREEN_OFF = "lockOnScreenOff"
-		private const val LIVE_SEARCH = "liveSearch"
-		private const val GLOB_SEARCH = "globSearch"
-		private const val KEEP_UNLOCKED_WHILE_EDITING = "keepUnlockedWhileEditing"
-		private const val BACKGROUND_UNLOCK_PREPARATION = "backgroundUnlockPreparation"
-		private const val VAULTS_REMOVED_DURING_MIGRATION = "vaultsRemovedDuringMigration"
-		private const val VAULTS_REMOVED_DURING_MIGRATION_TYPE = "vaultsRemovedDuringMigrationType"
 		const val DEBUG_MODE = "debugMode"
-		const val DISABLE_APP_WHEN_OBSCURED = "disableAppWhenObscured"
 		const val SECURE_SCREEN = "secureScreen"
 		const val SCREEN_STYLE_MODE = "screenStyleMode"
-		const val PHOTO_UPLOAD = "photoUpload"
-		const val PHOTO_UPLOAD_INSTANT = "photoUploadInstant"
-		const val PHOTO_UPLOAD_ONLY_USING_WIFI = "photoUploadOnlyUsingWifi"
-		const val PHOTO_UPLOAD_VAULT = "photoUploadVault"
-		const val PHOTO_UPLOAD_FOLDER = "photoUploadFolder"
-		const val PHOTO_UPLOAD_INCLUDING_VIDEOS = "photoUploadIncludingVideos"
-		const val USE_LRU_CACHE = "lruCache"
-		const val LRU_CACHE_SIZE = "lruCacheSize"
-		const val MAIL = "mail"
 		const val UPDATE_INTERVAL = "updateInterval"
 		const val POLLING_INTERVAL = "pollingInterval"
 		private const val LAST_UPDATE_CHECK = "lastUpdateCheck"

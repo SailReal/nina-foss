@@ -18,7 +18,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import java.util.function.Supplier
 import de.ninafoss.presentation.util.KeyboardHelper
-import de.ninafoss.util.SharedPreferencesHandler
 
 abstract class BaseDialog<Callback> : DialogFragment() {
 
@@ -42,9 +41,7 @@ abstract class BaseDialog<Callback> : DialogFragment() {
 		val builder = AlertDialog.Builder(requireActivity())
 		customDialog = requireActivity().layoutInflater.inflate(dialogContent, null)
 		builder.setView(customDialog)
-		val dialog = setupDialog(builder)
-		dialog.window?.decorView?.filterTouchesWhenObscured = disableDialogWhenObscured()
-		return dialog
+		return setupDialog(builder)
 	}
 
 	// Need to return the view here or onViewCreated won't be called by DialogFragment, sigh
@@ -54,10 +51,6 @@ abstract class BaseDialog<Callback> : DialogFragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		setupView()
-	}
-
-	protected open fun disableDialogWhenObscured(): Boolean {
-		return SharedPreferencesHandler(requireContext()).disableAppWhenObscured()
 	}
 
 	fun onWaitForResponse(view: View) {

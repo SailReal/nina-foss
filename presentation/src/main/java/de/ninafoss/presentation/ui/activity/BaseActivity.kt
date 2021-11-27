@@ -8,7 +8,6 @@ import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -17,7 +16,6 @@ import androidx.fragment.app.Fragment
 import java.lang.String.format
 import javax.inject.Inject
 import de.ninafoss.generator.Activity
-import de.ninafoss.presentation.BuildConfig
 import de.ninafoss.presentation.NinaFossApp
 import de.ninafoss.presentation.R
 import de.ninafoss.presentation.di.HasComponent
@@ -105,16 +103,6 @@ abstract class BaseActivity : AppCompatActivity(), View, ActivityCompat.OnReques
 	public override fun onResume() {
 		super.onResume()
 		logLifecycleAsInfo("onResume")
-
-		// not using android extensions to access activityRootVIew because the view might be from different layouts with different type
-		findViewById<android.view.View>(R.id.activityRootView)?.filterTouchesWhenObscured = sharedPreferencesHandler.disableAppWhenObscured()
-
-		val config = javaClass.getAnnotation(Activity::class.java)
-		if (config?.secure == true && sharedPreferencesHandler.secureScreen() && !BuildConfig.DEBUG) {
-			window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
-		} else {
-			window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
-		}
 
 		if (closeDialogOnResume) {
 			closeDialog()

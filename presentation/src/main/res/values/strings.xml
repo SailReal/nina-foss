@@ -125,12 +125,12 @@
 	<string name="screen_settings_auto_photo_upload_title">Save auto upload files to&#8230;</string>
 
 	<string name="screen_settings_section_social" translatable="false">@string/screen_webdav_settings_done_button_text</string>
-	<string name="screen_settings_website_label">Cryptomator website</string>
+	<string name="screen_settings_website_label">NINA FOSS website</string>
 	<string name="screen_settings_twitter_label">Follow us on Twitter</string>
-	<string name="screen_settings_facebook_label">Like us on Facebook</string>
-	<string name="screen_settings_website_uri" translatable="false">https://cryptomator.org</string>
-	<string name="screen_settings_facebook_uri" translatable="false">https://facebook.com/Cryptomator</string>
-	<string name="screen_settings_twitter_uri" translatable="false">https://twitter.com/Cryptomator</string>
+	<string name="screen_settings_mastodon_label">Follow us on Mastodon</string>
+	<string name="screen_settings_website_uri" translatable="false">https://nina-foss.de</string>
+	<string name="screen_settings_twitter_uri" translatable="false">https://twitter.com/NINA-FOSS</string>
+	<string name="screen_settings_mastodon_uri" translatable="false">https://mastodon.online/@NINA-FOSS</string>
 
 	<string name="screen_settings_section_legal">Legal</string>
 	<string name="screen_settings_licenses_label">Licenses</string>
@@ -138,12 +138,10 @@
 
 	<string name="screen_settings_section_support">Support</string>
 	<string name="screen_settings_contact_label">Request help</string>
-	<string name="screen_settings_support_uri" translatable="false">https://cryptomator.org/contact/</string>
+	<string name="screen_settings_support_uri" translatable="false">https://nina-foss.de/contact/</string>
 	<string name="screen_settings_debug_mode_label">Debug mode</string>
 	<string name="screen_settings_error_report_label">Send log file</string>
 	<string name="screen_settings_error_report_failed">Sending failed</string>
-	<string name="screen_settings_security_label">Security hints</string>
-	<string name="screen_settings_security_url" translatable="false">https://docs.cryptomator.org/en/1.5/security/best-practices/</string>
 
 	<string name="screen_settings_section_version">Version</string>
 

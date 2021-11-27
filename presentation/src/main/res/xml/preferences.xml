@@ -26,22 +26,6 @@
 
 	</PreferenceCategory>
 
-	<PreferenceCategory android:title="@string/screen_settings_section_search">
-
-		<androidx.preference.SwitchPreferenceCompat
-			android:defaultValue="false"
-			android:key="liveSearch"
-			android:summary="@string/screen_settings_live_search_summary"
-			android:title="@string/screen_settings_live_search" />
-
-		<androidx.preference.SwitchPreferenceCompat
-			android:defaultValue="false"
-			android:key="globSearch"
-			android:summary="@string/screen_settings_glob_search_summary"
-			android:title="@string/screen_settings_glob_search" />
-
-	</PreferenceCategory>
-
 	<PreferenceCategory android:title="@string/screen_settings_section_support">
 
 		<androidx.preference.PreferenceScreen android:title="@string/screen_settings_contact_label">
@@ -61,22 +45,6 @@
 
 	</PreferenceCategory>
 
-	<PreferenceCategory android:title="@string/screen_settings_advanced_settings">
-
-		<androidx.preference.SwitchPreferenceCompat
-			android:defaultValue="true"
-			android:key="backgroundUnlockPreparation"
-			android:summary="@string/screen_settings_background_unlock_preparation_label_summary"
-			android:title="@string/screen_settings_background_unlock_preparation_label" />
-
-		<androidx.preference.SwitchPreferenceCompat
-			android:defaultValue="false"
-			android:key="keepUnlockedWhileEditing"
-			android:summary="@string/screen_settings_keep_unlocked_while_editing_files_summary"
-			android:title="@string/screen_settings_keep_unlocked_while_editing_files" />
-
-	</PreferenceCategory>
-
 	<PreferenceCategory android:title="@string/screen_settings_section_social">
 
 		<androidx.preference.PreferenceScreen android:title="@string/screen_settings_website_label">
@@ -85,16 +53,16 @@
 				android:data="@string/screen_settings_website_uri" />
 		</androidx.preference.PreferenceScreen>
 
+		<androidx.preference.PreferenceScreen android:title="@string/screen_settings_mastodon_label">
+			<intent
+				android:action="android.intent.action.VIEW"
+				android:data="@string/screen_settings_mastodon_uri" />
+		</androidx.preference.PreferenceScreen>
+
 		<androidx.preference.PreferenceScreen android:title="@string/screen_settings_twitter_label">
 			<intent
 				android:action="android.intent.action.VIEW"
 				android:data="@string/screen_settings_twitter_uri" />
-		</androidx.preference.PreferenceScreen>
-
-		<androidx.preference.PreferenceScreen android:title="@string/screen_settings_facebook_label">
-			<intent
-				android:action="android.intent.action.VIEW"
-				android:data="@string/screen_settings_facebook_uri" />
 		</androidx.preference.PreferenceScreen>
 
 	</PreferenceCategory>
@@ -106,12 +74,6 @@
 				android:action="android.intent.action.MAIN"
 				android:targetClass="de.ninafoss.presentation.ui.activity.LicensesActivity"
 				android:targetPackage="@string/app_id" />
-		</androidx.preference.PreferenceScreen>
-
-		<androidx.preference.PreferenceScreen android:title="@string/screen_settings_security_label">
-			<intent
-				android:action="android.intent.action.VIEW"
-				android:data="@string/screen_settings_security_url" />
 		</androidx.preference.PreferenceScreen>
 
 	</PreferenceCategory>

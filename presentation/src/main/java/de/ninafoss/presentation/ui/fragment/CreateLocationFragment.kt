@@ -3,6 +3,7 @@ package de.ninafoss.presentation.ui.fragment
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import javax.inject.Inject
 import de.ninafoss.domain.Location
@@ -77,6 +78,12 @@ class CreateLocationFragment : BaseFragment() {
 
 	fun deleteMessageFromAdapter(locationId: Long) {
 		locationsAdapter.deleteMessage(locationId)
+	}
+
+	fun setPossibleLocations(locations: Map<String, String>) {
+		val adapter = ArrayAdapter(context(), android.R.layout.select_dialog_item, locations.keys.toMutableList())
+		locationName.threshold = 1
+		locationName.setAdapter(adapter)
 	}
 
 	companion object {

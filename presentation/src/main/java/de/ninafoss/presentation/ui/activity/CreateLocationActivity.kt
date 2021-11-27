@@ -25,6 +25,8 @@ class CreateLocationActivity : BaseActivity(), CreateLocationView, SettingsLocat
 	override fun setupView() {
 		toolbar.setTitle(R.string.screen_create_location_title)
 		setSupportActionBar(toolbar)
+
+		createLocationPresenter.loadPossibleLocations()
 	}
 
 	override fun createFragment(): Fragment = CreateLocationFragment.newInstance(createLocationIntent.location())
@@ -41,6 +43,10 @@ class CreateLocationActivity : BaseActivity(), CreateLocationView, SettingsLocat
 	override fun showLocationSettingsDialog(location: Location) {
 		val locationSettingDialog = SettingsLocationBottomSheet.newInstance(location)
 		locationSettingDialog.show(supportFragmentManager, "VaultSettings")
+	}
+
+	override fun setPossibleLocations(locations: Map<String, String>) {
+		createLocationFragment().setPossibleLocations(locations)
 	}
 
 	override fun onDeleteLocationClicked(location: Location) {

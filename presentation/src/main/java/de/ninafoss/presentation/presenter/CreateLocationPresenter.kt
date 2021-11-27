@@ -22,11 +22,7 @@ class CreateLocationPresenter @Inject constructor(
 	exceptionMappings: ExceptionHandlers
 ) : Presenter<CreateLocationView>(exceptionMappings) {
 
-	fun onWindowFocusChanged(hasFocus: Boolean) {
-		if (hasFocus) {
-			loadLocationList()
-		}
-	}
+	private val possibleLocations: Map<String, String>? = null
 
 	private val locationList: Unit
 		get() {
@@ -42,22 +38,36 @@ class CreateLocationPresenter @Inject constructor(
 			})
 		}
 
+	fun onWindowFocusChanged(hasFocus: Boolean) {
+		if (hasFocus) {
+			loadLocationList()
+		}
+	}
+
 	fun loadLocationList() {
 		locationList
 	}
 
 	fun checkUserInput(locationName: String, location: Location?) {
-		listAllPossibleLocationUseCase.run(object : NoOpResultHandler<Map<String, String>>() {
-			override fun onSuccess(locations: Map<String, String>) {
-				locations.keys.find { key -> key.startsWith(locationName, true) }?.let {
-					createLocation(locationName, locations[it]!!, location)
-				} ?: view?.showError(R.string.screen_enter_location_name_not_matching_code)
-			}
+		if(possibleLocations != null) {
+			checkUserInput(locationName, location, possibleLocations)
+		} else {
+			listAllPossibleLocationUseCase.run(object : NoOpResultHandler<Map<String, String>>() {
+				override fun onSuccess(locations: Map<String, String>) {
+					checkUserInput(locationName, location, locations)
+				}
 
-			override fun onError(e: Throwable) {
-				showError(e)
-			}
-		})
+				override fun onError(e: Throwable) {
+					showError(e)
+				}
+			})
+		}
+	}
+
+	private fun checkUserInput(locationName: String, location: Location?, locations: Map<String, String>) {
+		locations.keys.find { key -> key.startsWith(locationName, true) }?.let {
+			createLocation(locationName, locations[it]!!, location)
+		} ?: view?.showError(R.string.screen_enter_location_name_not_matching_code)
 	}
 
 	private fun createLocation(locationName: String, code: String, location: Location?) {
@@ -86,6 +96,18 @@ class CreateLocationPresenter @Inject constructor(
 			override fun onSuccess(void: Void?) {
 				Timber.tag("CreateLocationPresenter").i("Location removed")
 				loadLocationList()
+			}
+
+			override fun onError(e: Throwable) {
+				showError(e)
+			}
+		})
+	}
+
+	fun loadPossibleLocations() {
+		listAllPossibleLocationUseCase.run(object : NoOpResultHandler<Map<String, String>>() {
+			override fun onSuccess(locations: Map<String, String>) {
+				view?.setPossibleLocations(locations)
 			}
 
 			override fun onError(e: Throwable) {

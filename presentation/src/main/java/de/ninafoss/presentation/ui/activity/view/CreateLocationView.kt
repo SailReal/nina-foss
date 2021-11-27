@@ -6,5 +6,6 @@ interface CreateLocationView : View {
 
 	fun render(locations: List<Location>)
 	fun showLocationSettingsDialog(location: Location)
+	fun setPossibleLocations(locations: Map<String, String>)
 
 }

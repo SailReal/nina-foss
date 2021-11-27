@@ -33,7 +33,7 @@ class AppRunningNotification(private val context: Context) {
 
 		this.builder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID) //
 			.setContentTitle(context.getString(R.string.notification_app_running_title)) //
-			.setSmallIcon(R.drawable.background_splash_cryptomator) //
+			.setSmallIcon(R.drawable.background_splash_nina) //
 			.setColor(getColor(R.color.colorPrimary)) //
 			.setGroup(NOTIFICATION_GROUP_KEY)
 			.setOngoing(true)

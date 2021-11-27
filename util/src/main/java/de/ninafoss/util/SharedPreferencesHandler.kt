@@ -92,7 +92,6 @@ constructor(context: Context) {
 	companion object {
 
 		const val DEBUG_MODE = "debugMode"
-		const val SECURE_SCREEN = "secureScreen"
 		const val SCREEN_STYLE_MODE = "screenStyleMode"
 		const val UPDATE_INTERVAL = "updateInterval"
 		const val POLLING_INTERVAL = "pollingInterval"

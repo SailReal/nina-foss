@@ -4,6 +4,6 @@
 	<item>
 		<bitmap
 			android:gravity="center"
-			android:src="@drawable/background_splash_cryptomator" />
+			android:src="@drawable/background_splash_nina" />
 	</item>
 </layer-list>

@@ -1,6 +1,6 @@
 NINA FOSS is not related to the official "NINA - Die Warn-App des BBK" but provides a similar solution but is free and open source software without Google dependencies https://nina-foss.de/
 
-NINA FOSS uses the API of the "Bundesamt für Bevölkerungsschutz" to receive message. As NINA FOSS don't uses Google Play Services, the app needs to poll the server to detect changes (you can specify in the settings, how often the app connects to the server).
+NINA FOSS uses the API of the "Bundesamt für Bevölkerungsschutz" to receive messages. As NINA FOSS don't uses Google Play Services, the app needs to poll the server to detect changes (you can specify in the settings, how often the app connects to the server).
 
 We don't provide any kind of warranty or guarantee that this app will notify you now or in the future, use it at your own risk.
 
@@ -18,7 +18,7 @@ We don't provide any kind of warranty or guarantee that this app will notify you
 ./gradlew assembleApkstoreDebug
 ```
 
-## Contributing to Cryptomator for Android
+## Contributing
 
 Please read our [contribution guide](.github/CONTRIBUTING.md), if you would like to report a bug, ask a question, translate the app or help us with coding.
 

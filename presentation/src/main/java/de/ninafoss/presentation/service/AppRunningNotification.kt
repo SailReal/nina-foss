@@ -1,5 +1,6 @@
 package de.ninafoss.presentation.service
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
@@ -16,6 +17,8 @@ import de.ninafoss.presentation.ui.activity.MessageListActivity
 import de.ninafoss.presentation.util.ResourceHelper.Companion.getColor
 
 class AppRunningNotification(private val context: Context) {
+
+	lateinit var notification: Notification
 
 	private val builder: NotificationCompat.Builder
 	private var notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -36,6 +39,7 @@ class AppRunningNotification(private val context: Context) {
 			.setSmallIcon(R.drawable.background_splash_nina) //
 			.setColor(getColor(R.color.colorPrimary)) //
 			.setGroup(NOTIFICATION_GROUP_KEY)
+			.setAutoCancel(false)
 			.setOngoing(true)
 	}
 
@@ -52,7 +56,7 @@ class AppRunningNotification(private val context: Context) {
 	}*/
 
 	fun show() {
-		notificationManager.notify(NOTIFICATION_ID, builder.build())
+		this.notification = builder.build()
 	}
 
 	fun hide() {

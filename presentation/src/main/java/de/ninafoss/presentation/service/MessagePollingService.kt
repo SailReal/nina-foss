@@ -72,10 +72,11 @@ class MessagePollingService : Service() {
 			messageRepository = myMessageRepository
 			runningNotification?.show()
 			startPolling()
+
+			runningNotification?.notification?.let {
+				startForeground(1, it)
+			}
 		}
 
-	}
-
-	companion object {
 	}
 }

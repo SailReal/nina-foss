@@ -62,9 +62,14 @@ internal class MessageRepositoryImpl @Inject constructor(
 	@Throws(BackendException::class)
 	override fun updateMessagesForAllLocations(): List<Message> {
 		val storedMessages = messages()
-		return database.loadAll(LocationEntity::class.java).flatMap { location ->
-			getMessagesOverviewFor(location).filterNot { messageDTO ->
-				storedMessages.find { storedMessage -> messageDTO.id == storedMessage.remoteId && messageDTO.payload.version == storedMessage.remoteVersion } != null
+
+		val newOrUpdatedMessages = database.loadAll(LocationEntity::class.java).flatMap { location ->
+			val newOrUpdatedMessages = getMessagesOverviewFor(location)
+			// remove old messages
+			storedMessages.filter { message -> newOrUpdatedMessages.find { newOrUpdated -> message.remoteId == newOrUpdated.id } == null }.map { delete(it) }
+			// add new or updates messages
+			newOrUpdatedMessages.filter { messageDTO ->
+				storedMessages.find { storedMessage -> messageDTO.id == storedMessage.remoteId && messageDTO.payload.version == storedMessage.remoteVersion } == null
 			}.map { messageOverviewDTO ->
 				val messageDetails = getMessageDetailsFor(messageOverviewDTO)
 				val messageStoredButUpdateRequired = storedMessages.find { stored -> stored.remoteId == messageDetails.identifier }
@@ -72,6 +77,8 @@ internal class MessageRepositoryImpl @Inject constructor(
 				store(message)
 			}
 		}
+
+		return newOrUpdatedMessages
 	}
 
 	private fun getMessagesOverviewFor(location: LocationEntity): List<MessageOverviewDTO> {

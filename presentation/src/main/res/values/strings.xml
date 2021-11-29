@@ -408,6 +408,7 @@
 	<string name="screen_file_browser_file_info_label_date">modified %1$s ago</string>
 
 	<!-- lock timeout names -->
+	<string name="polling_timeout_five_minutes">5 minutes</string>
 	<string name="polling_timeout_fifteen_minutes">15 minutes</string>
 	<string name="polling_timeout_one_hour">1 hour</string>
 	<string name="polling_timeout_six_hours">6 hours</string>

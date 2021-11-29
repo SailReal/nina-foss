@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string-array name="screen_settings_polling_entries">
+		<item>@string/polling_timeout_five_minutes</item>
 		<item>@string/polling_timeout_fifteen_minutes</item>
 		<item>@string/polling_timeout_one_hour</item>
 		<item>@string/polling_timeout_six_hours</item>
 	</string-array>
 	<string-array name="screen_settings_polling_values">
+		<item>FIVE_MINUTES</item>
 		<item>FIFTEEN_MINUTES</item>
 		<item>ONE_HOUR</item>
 		<item>SIX_HOURS</item>

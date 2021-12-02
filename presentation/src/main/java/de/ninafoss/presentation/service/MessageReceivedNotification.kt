@@ -2,7 +2,7 @@ package de.ninafoss.presentation.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.NotificationManager.IMPORTANCE_LOW
+import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import de.ninafoss.domain.Message
@@ -10,7 +10,7 @@ import de.ninafoss.presentation.R
 import de.ninafoss.presentation.util.ResourceHelper.Companion.getColor
 import kotlin.random.Random
 
-class MessageReceivedNotification(private val context: Context) {
+class MessageReceivedNotification(context: Context) {
 
 	private val builder: NotificationCompat.Builder
 	private var notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -21,7 +21,7 @@ class MessageReceivedNotification(private val context: Context) {
 			val notificationChannel = NotificationChannel( //
 				NOTIFICATION_CHANNEL_ID, //
 				NOTIFICATION_CHANNEL_NAME, //
-				IMPORTANCE_LOW
+				IMPORTANCE_HIGH
 			)
 			notificationManager.createNotificationChannel(notificationChannel)
 		}

@@ -1,38 +1,31 @@
 package de.ninafoss.presentation.service
 
+import android.app.AlarmManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
-import java.util.Timer
-import java.util.TimerTask
 import de.ninafoss.domain.repository.MessageRepository
-import de.ninafoss.util.SharedPreferencesHandler
+import de.ninafoss.presentation.NinaFossApp
 import timber.log.Timber
 
 class MessagePollingService : Service() {
 
-	private val timer = Timer()
-
 	private var runningNotification: AppRunningNotification? = null
-	private var timerTask: TimerTask? = null
+	private var worker: Thread? = null
+	private var context: Context? = null
+	private var messageRepository: MessageRepository? = null
 
-	private lateinit var context: Context
-	private lateinit var messageRepository: MessageRepository
-
-	private fun startPolling() {
-		Timber.tag("MessagePollingService").i("Starting background polling")
-
-		timerTask = object : TimerTask() {
-			override fun run() {
-				Timber.tag("MessagePollingService").i("Running update messages")
-				messageRepository.updateMessagesForAllLocations().forEach {
+	private fun pollServer() {
+		worker = Thread {
+			Timber.tag("MessagePollingService").i("Running update messages")
+			context?.let { context ->
+				messageRepository?.updateMessagesForAllLocations()?.forEach {
 					MessageReceivedNotification(context).show(it)
 				}
 			}
 		}
-
-		timer.schedule(timerTask, 0, SharedPreferencesHandler(context).pollingInterval.durationMillis)
+		worker?.start()
 	}
 
 	override fun onCreate() {
@@ -42,14 +35,28 @@ class MessagePollingService : Service() {
 	}
 
 	override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-		Timber.tag("MessagePollingService").i("started")
+		(application as NinaFossApp).setUpAlarmManager(NinaFossApp.applicationContext().getSystemService(ALARM_SERVICE) as AlarmManager)
+
+		when (intent.getStringExtra(STATUS_ARG)) {
+			STATUS.START.name -> {
+				Timber.tag("MessagePollingService").i("started")
+				runningNotification?.show()
+				runningNotification?.notification?.let {
+					startForeground(1, it)
+				}
+			}
+			STATUS.UPDATE.name -> {
+				Timber.tag("MessagePollingService").i("updated")
+				pollServer()
+			}
+		}
+
 		return START_STICKY
 	}
 
 	override fun onDestroy() {
 		Timber.tag("MessagePollingService").i("onDestroyed")
-		timerTask?.cancel()
-		timer.cancel()
+		worker?.interrupt()
 		hideNotification()
 	}
 
@@ -70,13 +77,20 @@ class MessagePollingService : Service() {
 		fun init(myContext: Context, myMessageRepository: MessageRepository) {
 			context = myContext
 			messageRepository = myMessageRepository
-			runningNotification?.show()
-			startPolling()
 
 			runningNotification?.notification?.let {
 				startForeground(1, it)
 			}
 		}
 
+	}
+
+	companion object {
+
+		const val STATUS_ARG = "STATUS"
+
+		enum class STATUS {
+			START, UPDATE
+		}
 	}
 }

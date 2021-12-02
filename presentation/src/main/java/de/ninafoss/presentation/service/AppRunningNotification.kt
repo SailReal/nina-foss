@@ -3,20 +3,13 @@ package de.ninafoss.presentation.service
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.NotificationManager.IMPORTANCE_LOW
-import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_CANCEL_CURRENT
+import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.content.Context
-import android.content.Intent
-import android.content.Intent.ACTION_MAIN
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.core.app.NotificationCompat
 import de.ninafoss.presentation.R
-import de.ninafoss.presentation.ui.activity.MessageListActivity
 import de.ninafoss.presentation.util.ResourceHelper.Companion.getColor
 
-class AppRunningNotification(private val context: Context) {
+class AppRunningNotification(context: Context) {
 
 	lateinit var notification: Notification
 
@@ -29,7 +22,7 @@ class AppRunningNotification(private val context: Context) {
 			val notificationChannel = NotificationChannel( //
 				NOTIFICATION_CHANNEL_ID, //
 				NOTIFICATION_CHANNEL_NAME, //
-				IMPORTANCE_LOW
+				IMPORTANCE_HIGH
 			)
 			notificationManager.createNotificationChannel(notificationChannel)
 		}

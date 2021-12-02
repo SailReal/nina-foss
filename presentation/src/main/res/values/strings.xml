@@ -325,6 +325,10 @@
 	<string name="dialog_beta_confirmation_title" translatable="false">Beta release</string>
 	<string name="dialog_beta_confirmation" translatable="false">This is a beta release which introduces the support of message format 8. Please make sure that you don\'t use your production message for testing or have a good backup strategy.</string>
 
+	<string name="dialog_disclaimer_confirmation_title">Disclaimer</string>
+	<string name="dialog_disclaimer_confirmation">NINA FOSS is not related to the official \'NINA - Die Warn-App des BBK\' but provides a similar solution but is free and open source software without Google dependencies.\nNINA FOSS uses the API of the \'Bundesamt für Bevölkerungsschutz\' to receive messages. As NINA FOSS doesn\'t use Google Play Services, the app needs to poll the server to detect changes (you can specify in the settings, how often the app connects to the server).\nWe don\'t provide any kind of warranty or guarantee that this app will notify you now or in the future, use it at your own risk.</string>
+	<string name="dialog_disclaimer_neutral_button" translatable="false">@string/dialog_unable_to_share_positive_button</string>
+
 	<string name="dialog_no_more_images_to_display">No more images to display&#8230;</string>
 
 	<string name="dialog_pcloud_credentials_updated_title">Credentials of \'%1$s\' updated</string>

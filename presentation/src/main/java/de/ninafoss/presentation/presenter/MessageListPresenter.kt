@@ -10,6 +10,7 @@ import de.ninafoss.domain.usecases.message.GetMessageListUseCase
 import de.ninafoss.domain.usecases.message.UpdateMessagesUseCase
 import de.ninafoss.presentation.exception.ExceptionHandlers
 import de.ninafoss.presentation.ui.activity.view.MessageListView
+import de.ninafoss.presentation.ui.dialog.DisclaimerDialog
 import de.ninafoss.presentation.util.FileUtil
 import de.ninafoss.util.SharedPreferencesHandler
 import timber.log.Timber
@@ -34,6 +35,10 @@ class MessageListPresenter @Inject constructor( //
 	}
 
 	fun prepareView() {
+		if(!sharedPreferencesHandler.disclaimerAccepted()) {
+			view?.showDialog(DisclaimerDialog.newInstance())
+		}
+
 		checkForAppUpdates()
 	}
 
@@ -114,6 +119,10 @@ class MessageListPresenter @Inject constructor( //
 
 	fun onAddLocationClicked() {
 		view?.showCreateLocationView()
+	}
+
+	fun onDisclaimerAccepted() {
+		sharedPreferencesHandler.setDisclaimerAccepted()
 	}
 
 	init {

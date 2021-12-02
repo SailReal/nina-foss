@@ -89,6 +89,14 @@ constructor(context: Context) {
 		return different / daysInMilli >= updateIntervalInDays.get()
 	}
 
+	fun setDisclaimerAccepted() {
+		defaultSharedPreferences.setValue(DISCLAIMER_ACCEPTED, true)
+	}
+
+	fun disclaimerAccepted() : Boolean {
+		return defaultSharedPreferences.getBoolean(DISCLAIMER_ACCEPTED, false)
+	}
+
 	companion object {
 
 		const val DEBUG_MODE = "debugMode"
@@ -96,6 +104,7 @@ constructor(context: Context) {
 		const val UPDATE_INTERVAL = "updateInterval"
 		const val POLLING_INTERVAL = "pollingInterval"
 		private const val LAST_UPDATE_CHECK = "lastUpdateCheck"
+		private const val DISCLAIMER_ACCEPTED = "disclaimerAccepted"
 	}
 
 	private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {

@@ -2,7 +2,7 @@ apply from: 'buildsystem/dependencies.gradle'
 apply plugin: "com.vanniktech.android.junit.jacoco"
 
 buildscript {
-	ext.kotlin_version = '1.5.31'
+	ext.kotlin_version = '1.6.0'
 	repositories {
 		mavenCentral()
 		google()
@@ -28,7 +28,7 @@ def getVersionCode = { ->
 			commandLine 'git', 'rev-list', '--count', branchName.toString().trim()
 			standardOutput = appBuild
 		}
-		return Integer.parseInt(appBuild.toString().trim()) + 1958 // adding 1958 for legacy reasons
+		return Integer.parseInt(appBuild.toString().trim())
 	}
 	catch (ignored) {
 		return -1

@@ -12,6 +12,7 @@ import de.ninafoss.presentation.intent.Intents.settingsIntent
 import de.ninafoss.presentation.model.ProgressModel
 import de.ninafoss.presentation.presenter.MessageListPresenter
 import de.ninafoss.presentation.ui.activity.view.MessageListView
+import de.ninafoss.presentation.ui.dialog.DisclaimerDialog
 import de.ninafoss.presentation.ui.dialog.UpdateAppAvailableDialog
 import de.ninafoss.presentation.ui.dialog.UpdateAppDialog
 import de.ninafoss.presentation.ui.fragment.MessageListFragment
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.toolbar_layout.toolbar
 class MessageListActivity : BaseActivity(), //
 	MessageListView, //
 	//SettingsMessageBottomSheet.Callback, //
+	DisclaimerDialog.Callback, //
 	UpdateAppAvailableDialog.Callback, //
 	UpdateAppDialog.Callback {
 
@@ -125,5 +127,9 @@ class MessageListActivity : BaseActivity(), //
 
 	override fun showCreateLocationView() {
 		messageListPresenter.startIntent(createLocationIntent())
+	}
+
+	override fun onDisclaimerAccepted() {
+		messageListPresenter.onDisclaimerAccepted()
 	}
 }

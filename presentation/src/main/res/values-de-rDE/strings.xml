@@ -228,6 +228,8 @@
 	<string name="dialog_sym_link_back_button">Back</string>
 	<string name="dialog_no_dir_file_title">Unable to load contents of directory</string>
 	<string name="dialog_no_dir_file_message">Cloud folder \'%1$s\' doesn\'t have a valid directory file. It could be that the folder was created on another device and has not yet been fully synchronized to the cloud. Please check in your cloud if the following file exists and is not empty:\n%2$s</string>
+	<string name="dialog_disclaimer_confirmation_title">Disclaimer</string>
+	<string name="dialog_disclaimer_confirmation">NINA FOSS is not related to the official \'NINA - Die Warn-App des BBK\' but provides a similar solution but is free and open source software without Google dependencies.\nNINA FOSS uses the API of the \'Bundesamt für Bevölkerungsschutz\' to receive messages. As NINA FOSS doesn\'t use Google Play Services, the app needs to poll the server to detect changes (you can specify in the settings, how often the app connects to the server).\nWe don\'t provide any kind of warranty or guarantee that this app will notify you now or in the future, use it at your own risk.</string>
 	<string name="dialog_no_more_images_to_display">No more images to display&#8230;</string>
 	<string name="dialog_pcloud_credentials_updated_title">Credentials of \'%1$s\' updated</string>
 	<string name="dialog_pcloud_credentials_updated">If you intended to add a new pCloud account, click on this url <a href="https://www.pcloud.com">www.pcloud.com</a>, log out from the current account and click again on the \'+\' in this app to create a new cloud connection.</string>

@@ -3,7 +3,6 @@ package de.ninafoss.presentation.ui.activity
 import android.content.Intent
 import android.net.Uri
 import androidx.fragment.app.Fragment
-import javax.inject.Inject
 import de.ninafoss.domain.Message
 import de.ninafoss.generator.Activity
 import de.ninafoss.presentation.R
@@ -16,7 +15,8 @@ import de.ninafoss.presentation.ui.dialog.DisclaimerDialog
 import de.ninafoss.presentation.ui.dialog.UpdateAppAvailableDialog
 import de.ninafoss.presentation.ui.dialog.UpdateAppDialog
 import de.ninafoss.presentation.ui.fragment.MessageListFragment
-import kotlinx.android.synthetic.main.toolbar_layout.toolbar
+import kotlinx.android.synthetic.main.toolbar_layout.*
+import javax.inject.Inject
 
 @Activity(layout = R.layout.activity_layout)
 class MessageListActivity : BaseActivity(), //
@@ -129,7 +129,7 @@ class MessageListActivity : BaseActivity(), //
 		messageListPresenter.startIntent(createLocationIntent())
 	}
 
-	override fun onDisclaimerAccepted() {
+    override fun onDisclaimerAccepted() {
 		messageListPresenter.onDisclaimerAccepted()
 	}
 }

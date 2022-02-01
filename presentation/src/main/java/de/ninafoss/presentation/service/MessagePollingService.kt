@@ -5,6 +5,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
+import de.ninafoss.data.util.NetworkConnectionCheck
 import de.ninafoss.domain.repository.MessageRepository
 import de.ninafoss.presentation.NinaFossApp
 import timber.log.Timber
@@ -15,13 +16,19 @@ class MessagePollingService : Service() {
 	private var worker: Thread? = null
 	private var context: Context? = null
 	private var messageRepository: MessageRepository? = null
+	private var networkConnectionCheck: NetworkConnectionCheck? = null
 
 	private fun pollServer() {
 		worker = Thread {
 			Timber.tag("MessagePollingService").i("Running update messages")
 			context?.let { context ->
-				messageRepository?.updateMessagesForAllLocations()?.forEach {
-					MessageReceivedNotification(context).show(it)
+				if(networkConnectionCheck?.isPresent == true) {
+					messageRepository?.updateMessagesForAllLocations()?.forEach {
+						MessageReceivedNotification(context).show(it)
+					}
+				} else {
+					Timber.tag("MessagePollingService").i("Network problems")
+					runningNotification?.showNetworkError()
 				}
 			}
 		}
@@ -74,9 +81,10 @@ class MessagePollingService : Service() {
 
 	inner class Binder internal constructor() : android.os.Binder() {
 
-		fun init(myContext: Context, myMessageRepository: MessageRepository) {
+		fun init(myContext: Context, myNetworkConnectionCheck: NetworkConnectionCheck, myMessageRepository: MessageRepository) {
 			context = myContext
 			messageRepository = myMessageRepository
+			networkConnectionCheck = myNetworkConnectionCheck
 
 			runningNotification?.notification?.let {
 				startForeground(1, it)

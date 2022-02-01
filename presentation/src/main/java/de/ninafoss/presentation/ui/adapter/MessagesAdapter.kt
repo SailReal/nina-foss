@@ -1,11 +1,10 @@
 package de.ninafoss.presentation.ui.adapter
 
 import android.view.View
-import javax.inject.Inject
 import de.ninafoss.domain.Message
 import de.ninafoss.presentation.R
-import kotlinx.android.synthetic.main.item_message.view.messageName
-import kotlinx.android.synthetic.main.item_message.view.settings
+import kotlinx.android.synthetic.main.item_message.view.*
+import javax.inject.Inject
 
 class MessagesAdapter @Inject
 internal constructor() : RecyclerViewBaseAdapter<Message, MessagesAdapter.OnItemInteractionListener, MessagesAdapter.MessageViewHolder>() {
@@ -46,7 +45,7 @@ internal constructor() : RecyclerViewBaseAdapter<Message, MessagesAdapter.OnItem
 		override fun bind(position: Int) {
 			val message = getItem(position)
 
-			itemView.messageName.text = message.message
+			itemView.messageName.text = message.headline
 
 			//itemView.cloudImage.setImageResource(message.cloudType.vaultImageResource)
 

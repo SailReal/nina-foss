@@ -6,10 +6,12 @@ import dagger.Component;
 import de.ninafoss.domain.di.PerView;
 import de.ninafoss.presentation.di.module.ActivityModule;
 import de.ninafoss.presentation.ui.activity.CreateLocationActivity;
+import de.ninafoss.presentation.ui.activity.MessageDetailsActivity;
 import de.ninafoss.presentation.ui.activity.MessageListActivity;
 import de.ninafoss.presentation.ui.activity.SettingsActivity;
 import de.ninafoss.presentation.ui.activity.SplashActivity;
 import de.ninafoss.presentation.ui.fragment.CreateLocationFragment;
+import de.ninafoss.presentation.ui.fragment.MessageDetailsFragment;
 import de.ninafoss.presentation.ui.fragment.MessageListFragment;
 
 @PerView
@@ -29,5 +31,9 @@ public interface ActivityComponent {
 	void inject(MessageListActivity messageListActivity);
 
 	void inject(MessageListFragment messageListFragment);
+
+	void inject(MessageDetailsActivity messageDetailsActivity);
+
+	void inject(MessageDetailsFragment messageDetailsFragment);
 
 }

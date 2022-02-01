@@ -4,9 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import java.io.Serializable
-import java.util.Collections
-import java.util.function.Supplier
 import de.ninafoss.domain.usecases.NoOpResultHandler
 import de.ninafoss.domain.usecases.ProgressAwareResultHandler
 import de.ninafoss.domain.usecases.location.ProgressState
@@ -21,6 +18,9 @@ import de.ninafoss.presentation.workflow.ActivityResult
 import de.ninafoss.presentation.workflow.AsyncResult
 import de.ninafoss.presentation.workflow.Workflow
 import timber.log.Timber
+import java.io.Serializable
+import java.util.*
+import java.util.function.Supplier
 
 abstract class Presenter<V : View> protected constructor(private val exceptionMappings: ExceptionHandlers) : ActivityHolder {
 
@@ -210,7 +210,18 @@ abstract class Presenter<V : View> protected constructor(private val exceptionMa
 		}
 	}
 
-	private fun dispatchLater(asyncResult: AsyncResult) {
+    fun requestActivityResult(callback: BoundCallback<*, out ActivityResult?>, intentBuilder: IntentBuilder) {
+        requestActivityResult(callback, intentBuilder.build(this))
+    }
+
+    fun requestActivityResult(callback: BoundCallback<*, out ActivityResult?>, intent: Intent?) {
+        val requestCode = nextActivityForResultRequestCode++
+        activityResultCallbacks[requestCode] = callback
+        activity().startActivityForResult(intent, requestCode)
+    }
+
+
+    private fun dispatchLater(asyncResult: AsyncResult) {
 		if (isPaused) {
 			toDispatchLater.add(asyncResult)
 		} else {

@@ -1,19 +1,22 @@
 package de.ninafoss.presentation.presenter
 
 import android.content.Context
-import javax.inject.Inject
 import de.ninafoss.data.util.NetworkConnectionCheck
 import de.ninafoss.domain.Message
 import de.ninafoss.domain.di.PerView
 import de.ninafoss.domain.usecases.UpdateCheck
 import de.ninafoss.domain.usecases.message.GetMessageListUseCase
 import de.ninafoss.domain.usecases.message.UpdateMessagesUseCase
+import de.ninafoss.generator.Callback
 import de.ninafoss.presentation.exception.ExceptionHandlers
+import de.ninafoss.presentation.intent.Intents
 import de.ninafoss.presentation.ui.activity.view.MessageListView
 import de.ninafoss.presentation.ui.dialog.DisclaimerDialog
 import de.ninafoss.presentation.util.FileUtil
+import de.ninafoss.presentation.workflow.ActivityResult
 import de.ninafoss.util.SharedPreferencesHandler
 import timber.log.Timber
+import javax.inject.Inject
 
 @PerView
 class MessageListPresenter @Inject constructor( //
@@ -106,10 +109,17 @@ class MessageListPresenter @Inject constructor( //
 		}
 
 	fun onMessageClicked(message: Message) {
-		// TODO
+        requestActivityResult(ActivityResultCallbacks.onCloudAuthenticated(), Intents.messageDetailsIntent().withMessage(message))
 	}
 
-	fun onMessageSettingsClicked(message: Message) {
+
+    @Callback
+    fun onCloudAuthenticated(result: ActivityResult) {
+       //
+    }
+
+
+    fun onMessageSettingsClicked(message: Message) {
 		view?.showMessagetSettingsDialog(message)
 	}
 

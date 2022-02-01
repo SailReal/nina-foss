@@ -3,15 +3,14 @@ package de.ninafoss.presentation.ui.fragment
 import android.util.TypedValue
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import javax.inject.Inject
 import de.ninafoss.domain.Message
 import de.ninafoss.generator.Fragment
 import de.ninafoss.presentation.R
 import de.ninafoss.presentation.presenter.MessageListPresenter
 import de.ninafoss.presentation.ui.adapter.MessagesAdapter
-import kotlinx.android.synthetic.main.fragment_message_list.coordinatorLayout
-import kotlinx.android.synthetic.main.fragment_message_list.floating_action_button
-import kotlinx.android.synthetic.main.recycler_view_layout.recyclerView
+import kotlinx.android.synthetic.main.fragment_message_list.*
+import kotlinx.android.synthetic.main.recycler_view_layout.*
+import javax.inject.Inject
 
 @Fragment(R.layout.fragment_message_list)
 class MessageListFragment : BaseFragment() {

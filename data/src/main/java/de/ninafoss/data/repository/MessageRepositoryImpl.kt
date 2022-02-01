@@ -3,10 +3,6 @@ package de.ninafoss.data.repository
 import android.database.sqlite.SQLiteConstraintException
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.json.JSONException
-import java.io.IOException
-import javax.inject.Inject
-import javax.inject.Singleton
 import de.ninafoss.data.db.Database
 import de.ninafoss.data.db.entities.LocationEntity
 import de.ninafoss.data.db.entities.MessageEntity
@@ -22,7 +18,10 @@ import de.ninafoss.domain.exception.MessageAlreadyExistsException
 import de.ninafoss.domain.repository.MessageRepository
 import okhttp3.OkHttpClient
 import okhttp3.Request
-
+import org.json.JSONException
+import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 internal class MessageRepositoryImpl @Inject constructor(
@@ -109,7 +108,7 @@ internal class MessageRepositoryImpl @Inject constructor(
 		return try {
 			val response = httpClient.newCall(request).execute()
 			if (response.isSuccessful) {
-				response.body?.let {
+				response.body?.use {
 					val objectMapper = ObjectMapper()
 					objectMapper.readValue(it.string(), object : TypeReference<MessageDetailsDTO>() {})
 				} ?: throw FatalBackendException("Failed to retrieve locations, response body is empty")

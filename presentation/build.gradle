@@ -38,11 +38,6 @@ android {
 		coreLibraryDesugaringEnabled true
 	}
 
-	lintOptions {
-		quiet true
-		abortOnError false
-		ignoreWarnings true
-	}
 
 	buildTypes {
 		release {
@@ -81,10 +76,16 @@ android {
 			dimension "version"
 		}
 	}
-
 	packagingOptions {
-		exclude 'META-INF/jersey-module-version'
-		exclude 'META-INF/DEPENDENCIES'
+		resources {
+			excludes += ['META-INF/jersey-module-version', 'META-INF/DEPENDENCIES']
+		}
+	}
+
+	lint {
+		abortOnError false
+		ignoreWarnings true
+		quiet true
 	}
 }
 

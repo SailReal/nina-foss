@@ -28,11 +28,6 @@ android {
 		coreLibraryDesugaringEnabled true
 	}
 
-	lintOptions {
-		quiet true
-		abortOnError false
-		ignoreWarnings true
-	}
 
 	flavorDimensions "version"
 	productFlavors {
@@ -48,9 +43,16 @@ android {
 			dimension "version"
 		}
 	}
-
 	packagingOptions {
-		exclude 'META-INF/DEPENDENCIES'
+		resources {
+			excludes += ['META-INF/DEPENDENCIES']
+		}
+	}
+
+	lint {
+		abortOnError false
+		ignoreWarnings true
+		quiet true
 	}
 }
 

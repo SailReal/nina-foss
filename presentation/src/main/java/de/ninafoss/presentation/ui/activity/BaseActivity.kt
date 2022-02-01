@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import java.lang.String.format
-import javax.inject.Inject
 import de.ninafoss.generator.Activity
 import de.ninafoss.presentation.NinaFossApp
 import de.ninafoss.presentation.R
@@ -31,8 +29,10 @@ import de.ninafoss.presentation.ui.activity.view.View
 import de.ninafoss.presentation.ui.dialog.GenericProgressDialog
 import de.ninafoss.presentation.ui.snackbar.SnackbarAction
 import de.ninafoss.util.SharedPreferencesHandler
-import kotlin.reflect.KClass
 import timber.log.Timber
+import java.lang.String.format
+import javax.inject.Inject
+import kotlin.reflect.KClass
 
 abstract class BaseActivity : AppCompatActivity(), View, ActivityCompat.OnRequestPermissionsResultCallback,
 	HasComponent<ActivityComponent> {
@@ -337,7 +337,7 @@ abstract class BaseActivity : AppCompatActivity(), View, ActivityCompat.OnReques
 
 	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-		// presenter?.onRequestPermissionsResult(requestCode, permissions, grantResults) // FIXME
+		//presenter?.onRequestPermissionsResult(requestCode, permissions, grantResults)
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {

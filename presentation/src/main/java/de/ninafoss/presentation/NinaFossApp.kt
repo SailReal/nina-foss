@@ -68,7 +68,7 @@ class NinaFossApp : MultiDexApplication(), HasComponent<ApplicationComponent> {
 			override fun onServiceConnected(name: ComponentName, service: IBinder) {
 				Timber.tag("App").i("Service connected")
 				messagePollingServiceBinder = service as MessagePollingService.Binder
-				messagePollingServiceBinder.init(applicationContext, applicationComponent.messageRepository())
+				messagePollingServiceBinder.init(applicationContext, applicationComponent.networkConnectionCheck(), applicationComponent.messageRepository())
 			}
 
 			override fun onServiceDisconnected(name: ComponentName) {
